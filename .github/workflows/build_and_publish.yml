@@ -1,0 +1,60 @@
+# SPDX-FileCopyrightText: 2025 Helio Chissini de Castro <heliocastro@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
+name: Build and Publish
+
+on:
+  workflow_run:
+    workflows:
+      - Validation
+    types:
+      - completed
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+    paths-ignore:
+      - "**.md"
+  pull_request:
+    paths-ignore:
+      - "**.md"
+
+jobs:
+  build_deploy:
+    name: Build and Deploy Python Ort
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38
+        with:
+          python-version: |
+            3.10
+            3.11
+            3.12
+            3.13
+
+      - name: Build 📦 package
+        run: |
+          uv build
+        shell: bash
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08
+        with:
+          name: build-artifacts
+          path: dist/*
+
+      - name: Publish Test 📦 package
+        if: github.event_name == 'push'
+        env:
+          UV_PUBLISH_USERNAME: ${{ secrets.TEST_PYPI_USERNAME }}
+          UV_PUBLISH_PASSWORD: ${{ secrets.TEST_PYPI_TOKEN }}
+        run: |
+          uv publish --index testpypi dist/*
