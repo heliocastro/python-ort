@@ -56,7 +56,6 @@ jobs:
       - name: Publish Test 📦 package
         if: github.event_name == 'push'
         env:
-          UV_PUBLISH_USERNAME: ${{ vars.TEST_PYPI_USERNAME }}
-          UV_PUBLISH_PASSWORD: ${{ secrets.TEST_PYPI_TOKEN }}
+          UV_PUBLISH_TOKEN: ${{ secrets.TEST_PYPI_TOKEN }}
         run: |
-          uv publish --index testpypi dist/*
+          uv publish --publish-url https://test.pypi.org/legacy/ dist/*
