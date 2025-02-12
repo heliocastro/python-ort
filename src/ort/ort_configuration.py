@@ -6,8 +6,11 @@
 from __future__ import annotations
 
 from enum import Enum
+from pathlib import Path
 from typing import Annotated, Any
 
+import yaml
+import yaml.parser
 from pydantic import AnyUrl, BaseModel, ConfigDict, Field, RootModel
 
 from .package_manager_configuration import OrtPackageManagerConfigurations
@@ -304,3 +307,20 @@ class OrtConfiguration(BaseModel):
     """
 
     ort: Ort
+
+    def __init__(self, ort_file: str | Path | None = None, **data: dict[str, Any]) -> None:
+        if ort_file:
+            if isinstance(ort_file, str):
+                ort_file = Path(ort_file)
+            try:
+                with ort_file.open() as fp:
+                    model = yaml.safe_load(fp)
+                data.update(model)
+            except FileNotFoundError as e:
+                raise ValueError(e)
+            except yaml.parser.ParserError as e:
+                print(f"Error decoding YAML from {ort_file}")
+                raise ValueError(e)
+            except Exception as e:
+                raise ValueError(e)
+            super().__init__(**data)
