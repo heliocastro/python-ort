@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from ort import OrtConfiguration, Scanner, Severity, Storages
+from ort import OrtConfiguration, Scanner, Severity
 
 CONFIG_PATH = Path(__file__).parent / "data" / "ort_config_reference.yml"
 
