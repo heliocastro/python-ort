@@ -24,6 +24,9 @@ jobs:
   build_deploy:
     name: Build and Deploy Python Ort
     runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
 
     steps:
       - uses: actions/checkout@v4
@@ -34,21 +37,20 @@ jobs:
 
       - uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38
         with:
-          python-version: |
-            3.10
-            3.11
-            3.12
-            3.13
+          python-version: ${{ matrix.python-version }}
 
       - name: Build 📦 package
         run: |
           uv build
         shell: bash
 
+      - name: Test with python ${{ matrix.python-version }}
+        run: uv run --frozen pytest
+
       - name: Upload artifacts
         uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08
         with:
-          name: build-artifacts
+          name: build-artifacts-${{ matrix.python-version }}
           path: dist/*
 
       - name: Publish Test 📦 package
