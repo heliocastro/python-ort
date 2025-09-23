@@ -14,7 +14,7 @@ license = "MIT"
 license-files = ["LICENSE"]
 requires-python = ">=3.10"
 dependencies = [
-    "pydantic>=2.10.6",
+    "pydantic>=2.11.9",
     "pyyaml>=6.0.2",
 ]
 classifiers = [
@@ -30,13 +30,13 @@ classifiers = [
 
 [dependency-groups]
 dev = [
-    "mypy>=1.15.0",
-    "pre-commit>=4.1.0",
-    "pycodestyle>=2.12.1",
-    "pytest>=8.3.4",
-    "pytest-mypy>=0.10.3",
-    "ruff>=0.9.6",
-    "types-pyyaml>=6.0.12.20241230",
+    "mypy>=1.18.2",
+    "pre-commit>=4.3.0",
+    "pycodestyle>=2.14.0",
+    "pytest>=8.4.2",
+    "pytest-mypy>=1.0.1",
+    "ruff>=0.13.1",
+    "types-pyyaml>=6.0.12.20250915",
 ]
 
 [tool.pytest.ini_options]
