@@ -1,0 +1,19 @@
+#!/bin/bash
+
+datamodel-codegen  \
+    --formatters "isort" \
+    --formatters "ruff-format" \
+    --use-standard-collections \
+    --use-union-operator \
+    --target-python-version 3.10 \
+    --disable-future-imports \
+    --use-double-quotes \
+    --snake-case-field \
+    --output-model-type pydantic_v2.BaseModel \
+    --custom-file-header-path scripts/header \
+    --input-file-type "jsonschema" \
+    --treat-dot-as-module \
+    --reuse-model \
+    --parent-scoped-naming \
+    --input $1 \
+    --output src/ort/models/$2

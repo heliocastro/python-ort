@@ -1,0 +1,51 @@
+# SPDX-FileCopyrightText: 2025 Helio Chissini de Castro <heliocastro@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
+name: Build
+permissions:
+  contents: read
+  pull-requests: write
+
+on:
+  workflow_run:
+    workflows:
+      - Validation
+    types:
+      - completed
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+
+jobs:
+  build:
+    name: Build Python Ort
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        python-version: ['3.10', '3.11', '3.12', '3.13']
+
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
+        with:
+          enable-cache: true
+
+      - uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Build 📦 package
+        shell: bash
+        run: |
+          uv build
+
+      - name: Test with python ${{ matrix.python-version }}
+        run: uv run --frozen pytest
