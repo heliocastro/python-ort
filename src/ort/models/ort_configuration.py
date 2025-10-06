@@ -3,8 +3,6 @@
 # SPDX-License-Identifier: MIT
 
 
-from __future__ import annotations
-
 from enum import Enum
 from pathlib import Path
 from typing import Annotated, Any
@@ -13,7 +11,7 @@ import yaml
 import yaml.parser
 from pydantic import AnyUrl, BaseModel, ConfigDict, Field, RootModel
 
-from .package_manager_configuration import OrtPackageManagerConfigurations
+from .package_manager_configurations import OrtPackageManagerConfigurations
 from .package_managers import OrtPackageManagers
 
 
