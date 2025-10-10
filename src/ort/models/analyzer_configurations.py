@@ -24,9 +24,9 @@ class OrtAnalyzerConfigurations(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    allow_dynamic_versions: bool | None = Field(None, alias="allowDynamicVersions")
-    enabled_package_managers: list[OrtPackageManagers] | None = Field(None, alias="enabledPackageManagers")
-    disabled_package_managers: list[OrtPackageManagers] | None = Field(None, alias="disabledPackageManagers")
-    package_managers: OrtPackageManagerConfigurations | None = Field(None, alias="packageManagers")
-    sw360_configuration: Sw360Configuration | None = Field(None, alias="sw360Configuration")
-    skip_excluded: bool | None = Field(None, alias="skipExcluded")
+    allow_dynamic_versions: bool | None = Field(None)
+    enabled_package_managers: list[OrtPackageManagers] | None = Field(None)
+    disabled_package_managers: list[OrtPackageManagers] | None = Field(None)
+    package_managers: OrtPackageManagerConfigurations | None = Field(None)
+    sw360_configuration: Sw360Configuration | None = Field(None)
+    skip_excluded: bool | None = Field(None)

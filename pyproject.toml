@@ -7,7 +7,7 @@ packages = ["src/ort"]
 
 [project]
 name = "python-ort"
-version = "0.1.3"
+version = "0.1.4"
 description = "A Python Ort model serialization library"
 readme = "README.md"
 license = "MIT"
