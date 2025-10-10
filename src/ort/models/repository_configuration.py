@@ -372,23 +372,32 @@ class OrtRepositoryConfiguration(BaseModel):
         Each field corresponds to a specific aspect of the repository's configuration.
     """
 
-    analyzer: OrtAnalyzerConfigurations | None = None
+    analyzer: OrtAnalyzerConfigurations | None = Field(
+        None,
+        description="Define Analyzer specific options",
+    )
     includes: OrtRepositoryConfigurationIncludes | None = Field(
-        None, description="Defines which parts of a repository should be included."
+        None,
+        description="Defines which parts of a repository should be included.",
     )
     excludes: OrtRepositoryConfigurationExcludes | None = Field(
-        None, description="Defines which parts of a repository should be excluded."
+        None,
+        description="Defines which parts of a repository should be excluded.",
     )
     resolutions: ResolutionsSchema | None = None
     curations: OrtRepositoryConfigurationCurations | OrtRepositoryConfigurationCurations1 | None = Field(
-        None, description="Curations for artifacts in a repository."
+        None,
+        description="Curations for artifacts in a repository.",
     )
     package_configurations: list[OrtPackageManagerConfigurations] | None = Field(
-        None, description="A configuration for a specific package and provenance."
+        None,
+        description="A configuration for a specific package and provenance.",
     )
     license_choices: OrtRepositoryConfigurationLicenseChoices | None = Field(
-        None, description="A configuration to select a license from a multi-licensed package."
+        None,
+        description="A configuration to select a license from a multi-licensed package.",
     )
     snippet_choices: list[OrtRepositoryConfigurationSnippetChoice] | None = Field(
-        None, description="A configuration to select a snippet from a package with multiple snippet findings."
+        None,
+        description="A configuration to select a snippet from a package with multiple snippet findings.",
     )
