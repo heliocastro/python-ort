@@ -7,14 +7,14 @@ packages = ["src/ort"]
 
 [project]
 name = "python-ort"
-version = "0.1.4"
+version = "0.2.0"
 description = "A Python Ort model serialization library"
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
 requires-python = ">=3.10"
 dependencies = [
-    "pydantic>=2.11.10",
+    "pydantic>=2.12.4",
     "pyyaml>=6.0.3",
 ]
 classifiers = [
@@ -34,12 +34,12 @@ module-root = "src"
 
 [dependency-groups]
 dev = [
-    "datamodel-code-generator[http]>=0.34.0",
+    "datamodel-code-generator[http]>=0.35.0",
     "pre-commit>=4.3.0",
     "pycodestyle>=2.14.0",
-    "pyrefly>=0.35.0",
+    "pyrefly>=0.40.0",
     "pytest>=8.4.2",
-    "ruff>=0.13.3",
+    "ruff>=0.14.3",
     "types-pyyaml>=6.0.12.20250915",
 ]
 

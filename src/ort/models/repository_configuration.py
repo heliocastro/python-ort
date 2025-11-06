@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field, RootModel
 
 from .analyzer_configurations import OrtAnalyzerConfigurations
 from .package_managers import OrtPackageManagerConfigurations, PackageManagerConfigs
+from .source_code_origin import SourceCodeOrigin
 
 
 class OrtRepositoryConfigurationLicenseChoicesPackageLicenseChoiceLicenseChoice(BaseModel):
@@ -310,18 +311,20 @@ CurationsSchemaCurationsSchemaItemCurationsSourceArtifact = CurationsSchemaCurat
 
 class CurationsSchemaCurationsSchemaItemCurations(BaseModel):
     comment: str | None = None
+    purl: str | None = None
+    cpe: str | None = None
     authors: list[str] | None = None
     concluded_license: str | None = None
-    cpe: str | None = None
-    declared_license_mapping: dict[str, Any] | None = None
     description: str | None = None
     homepage_url: str | None = None
-    purl: str | None = None
     binary_artifact: CurationsSchemaCurationsSchemaItemCurationsBinaryArtifact | None = None
     source_artifact: CurationsSchemaCurationsSchemaItemCurationsSourceArtifact | None = None
     vcs: VcsMatcher | None = None
     is_metadata_only: bool | None = None
     is_modified: bool | None = None
+    declared_license_mapping: dict[str, Any] = Field(default_factory=dict)
+    source_code_origins: list[SourceCodeOrigin] | None = None
+    labels: dict[str, str] = Field(default_factory=dict)
 
 
 class CurationsSchemaCurationsSchemaItem(BaseModel):
