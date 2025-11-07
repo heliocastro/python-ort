@@ -1,295 +1,897 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://oss-review-toolkit.org/.ort.yml",
-  "title": "ORT repository configuration",
-  "description": "The OSS-Review-Toolkit (ORT) provides a possibility to configure exclusions, resolutions and more in a file called `.ort.yml`. A full list of all available options can be found at https://oss-review-toolkit.org/ort/docs/configuration/ort-yml.",
-  "type": "object",
-  "properties": {
-    "analyzer": {
-      "$ref": "https://raw.githubusercontent.com/oss-review-toolkit/ort/main/integrations/schemas/repository-configurations/analyzer-configuration-schema.json"
-    },
-    "includes": {
-      "type": "object",
-      "description": "Defines which parts of a repository should be included.",
+  "$defs": {
+    "CurationArtifact": {
       "properties": {
-        "paths": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "pattern": {
-                "description": "A glob to match the path of the project definition file, relative to the root of the repository.",
-                "type": "string"
-              },
-              "reason": {
-                "$ref": "#/definitions/pathIncludeReason"
-              },
-              "comment": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "pattern",
-              "reason"
-            ]
-          }
-        }
-      }
-    },
-    "excludes": {
-      "type": "object",
-      "description": "Defines which parts of a repository should be excluded.",
-      "properties": {
-        "paths": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "pattern": {
-                "description": "A glob to match the path of the project definition file, relative to the root of the repository.",
-                "type": "string"
-              },
-              "reason": {
-                "$ref": "#/definitions/pathExcludeReason"
-              },
-              "comment": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "pattern",
-              "reason"
-            ]
-          }
+        "url": {
+          "format": "uri",
+          "minLength": 1,
+          "title": "Url",
+          "type": "string"
         },
-        "scopes": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "pattern": {
-                "type": "string"
-              },
-              "reason": {
-                "$ref": "#/definitions/scopeExcludeReason"
-              },
-              "comment": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "pattern",
-              "reason"
-            ]
-          }
-        }
-      }
-    },
-    "resolutions": {
-      "$ref": "https://raw.githubusercontent.com/oss-review-toolkit/ort/main/integrations/schemas/resolutions-schema.json"
-    },
-    "curations": {
-      "type": "object",
-      "description": "Curations for artifacts in a repository.",
-      "properties": {
-        "license_findings": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/licenseFindingCurations"
-          }
-        },
-        "packages": {
-          "$ref": "https://raw.githubusercontent.com/oss-review-toolkit/ort/main/integrations/schemas/curations-schema.json"
+        "hash": {
+          "$ref": "#/$defs/Hash"
         }
       },
-      "anyOf": [
-        {
-          "required": [
-            "license_findings"
-          ]
-        },
-        {
-          "required": [
-            "packages"
-          ]
-        }
-      ]
+      "required": [
+        "url",
+        "hash"
+      ],
+      "title": "CurationArtifact",
+      "type": "object"
     },
-    "package_configurations": {
-      "type": "array",
-      "description": "A configuration for a specific package and provenance.",
-      "items": {
-        "$ref": "https://raw.githubusercontent.com/oss-review-toolkit/ort/main/integrations/schemas/package-configuration-schema.json"
-      }
-    },
-    "license_choices": {
-      "type": "object",
-      "description": "A configuration to select a license from a multi-licensed package.",
+    "Curations": {
+      "additionalProperties": false,
+      "description": "Curations for artifacts in a repository.\n\nAttributes:\n    packages(list[PackageCuration]): Curations for third-party packages.\n    license_findings(list[LicenseFindingCuration]): Curations for license findings.",
       "properties": {
-        "package_license_choices": {
-          "type": "array",
+        "packages": {
+          "description": "Curations for third-party packages.",
           "items": {
-            "type": "object",
-            "properties": {
-              "package_id": {
-                "type": "string"
-              },
-              "license_choices": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "given": {
-                      "type": "string"
-                    },
-                    "choice": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "choice"
-                  ]
-                }
-              }
-            },
-            "required": [
-              "package_id",
-              "license_choices"
-            ]
-          }
-        },
-        "repository_license_choices": {
-          "type": "array",
-          "items": {
-            "given": {
-              "type": "string"
-            },
-            "choice": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "snippet_choices": {
-      "type": "array",
-      "description": "A configuration to select a snippet from a package with multiple snippet findings.",
-      "items": {
-        "type": "object",
-        "properties": {
-          "provenance": {
-            "type": "object",
-            "properties": {
-              "url": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "url"
-            ]
+            "$ref": "#/$defs/PackageCuration"
           },
-          "choices": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "given": {
-                  "type": "object",
-                  "properties": {
-                    "source_location": {
-                      "type": "object",
-                      "properties": {
-                        "path": {
-                          "type": "string"
-                        },
-                        "start_line": {
-                          "type": "integer"
-                        },
-                        "end_line": {
-                          "type": "integer"
-                        }
-                      },
-                      "required": [
-                        "path",
-                        "start_line",
-                        "end_line"
-                      ]
-                    }
-                  }
-                },
-                "choice": {
-                  "type": "object",
-                  "properties": {
-                    "purl": {
-                      "type": "string"
-                    },
-                    "reason": {
-                      "$ref": "#/definitions/snippetChoiceReason"
-                    },
-                    "comment": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "reason"
-                  ]
-                }
-              },
-              "required": [
-                "given",
-                "choice"
-              ]
-            }
-          }
+          "title": "Packages",
+          "type": "array"
         },
-        "required": [
-          "provenance",
-          "choices"
+        "license_findings": {
+          "description": "Curations for license findings.",
+          "items": {
+            "$ref": "#/$defs/LicenseFindingCuration"
+          },
+          "title": "License Findings",
+          "type": "array"
+        }
+      },
+      "title": "Curations",
+      "type": "object"
+    },
+    "Hash": {
+      "description": "A class that bundles a hash algorithm with its hash value.\n\nAttributes:\n    value (str): The value calculated using the hash algorithm.\n    algorithm (HashAlgorithm): The algorithm used to calculate the hash value.",
+      "properties": {
+        "value": {
+          "description": "The value calculated using the hash algorithm.",
+          "title": "Value",
+          "type": "string"
+        },
+        "algorithm": {
+          "$ref": "#/$defs/HashAlgorithm",
+          "description": "The algorithm used to calculate the hash value."
+        }
+      },
+      "required": [
+        "value",
+        "algorithm"
+      ],
+      "title": "Hash",
+      "type": "object"
+    },
+    "HashAlgorithm": {
+      "description": "An enum of supported hash algorithms. Each algorithm has one or more [aliases] associated to it,\nwhere the first alias is the definite name.\n\nAttributes:\n    NONE: No hash algorithm.\n    UNKNOWN: An unknown hash algorithm.\n    MD5: The Message-Digest 5 hash algorithm, see [MD5](http://en.wikipedia.org/wiki/MD5).\n    SHA1: The Secure Hash Algorithm 1, see [SHA-1](https://en.wikipedia.org/wiki/SHA-1).\n    SHA256: The Secure Hash Algorithm 2 with 256 bits, see [SHA-256](https://en.wikipedia.org/wiki/SHA-256).\n    SHA384: The Secure Hash Algorithm 2 with 384 bits, see [SHA-384](https://en.wikipedia.org/wiki/SHA-384).\n    SHA512: The Secure Hash Algorithm 2 with 512 bits, see [SHA-512](https://en.wikipedia.org/wiki/SHA-512).\n    SHA1GIT: The Secure Hash Algorithm 1, but calculated on a Git \"blob\" object, see\n        - https://git-scm.com/book/en/v2/Git-Internals-Git-Objects#_object_storage\n        - https://docs.softwareheritage.org/devel/swh-model/persistent-identifiers.html#git-compatibility",
+      "enum": [
+        "NONE",
+        "UNKNOWN",
+        "MD5",
+        "SHA1",
+        "SHA256",
+        "SHA384",
+        "SHA512",
+        [
+          [
+            "SHA-1-GIT",
+            "SHA1-GIT",
+            "SHA1GIT",
+            "SWHID"
+          ],
+          "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
         ]
-      }
-    }
-  },
-  "definitions": {
-    "licenseFindingCurations": {
-      "type": "object",
+      ],
+      "title": "HashAlgorithm"
+    },
+    "IssueResolutionReason": {
+      "enum": [
+        "BUILD_TOOL_ISSUE",
+        "CANT_FIX_ISSUE",
+        "SCANNER_ISSUE"
+      ],
+      "title": "IssueResolutionReason",
+      "type": "string"
+    },
+    "LicenseFindingCuration": {
+      "additionalProperties": false,
+      "description": "A curation for a license finding. Use it to correct a license finding or to add a license\nthat was not previously detected.\n\nAttributes:\n    path (str): A glob to match the file path of a license finding.\n    start_lines (list[int] | None): A matcher for the start line of a license finding, matches if the start line\n        matches any of [startLines] or if [startLines] is empty.\n    line_count (int | None): A matcher for the line count of a license finding\n        matches if the line count equals [lineCount] or if [lineCount] is None\n    detected_license (str | None): The concluded license as SPDX expression or None\n        for no license, see https://spdx.dev/spdx-specification-21-web-version#h.jxpfx0ykyb60.\n    concluded_license (str): The concluded license as SPDX expression or None for no license,\n        see https://spdx.dev/spdx-specification-21-web-version#h.jxpfx0ykyb60.\n    reason (LicenseFindingCurationReason): The reason why the curation was made, out of a predefined choice.\n    comment (str | None): A comment explaining this [LicenseFindingCuration].",
       "properties": {
         "path": {
+          "description": "A glob to match the file path of a license finding.",
+          "title": "Path",
           "type": "string"
         },
         "start_lines": {
-          "type": [
-            "integer",
-            "string"
-          ]
+          "anyOf": [
+            {
+              "items": {
+                "type": "integer"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "A matcher for the start line of a license finding, matches if the start line matches any of[startLines] or if [startLines] is empty.",
+          "title": "Start Lines"
         },
         "line_count": {
-          "type": "integer"
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "A matcher for the line count of a license findingmatches if the line count equals [lineCount] or if [lineCount] is None",
+          "title": "Line Count"
         },
         "detected_license": {
-          "type": "string"
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The concluded license as SPDX expression or Nonefor no license, see https://spdx.dev/spdx-specification-21-web-version#h.jxpfx0ykyb60.",
+          "title": "Detected License"
         },
         "concluded_license": {
+          "description": "The concluded license as SPDX expression or None for no license, see https://spdx.dev/spdx-specification-21-web-version#h.jxpfx0ykyb60.",
+          "title": "Concluded License",
           "type": "string"
         },
         "reason": {
-          "$ref": "#/definitions/licenseFindingCurationReason"
+          "$ref": "#/$defs/LicenseFindingCurationReason",
+          "description": "The reason why the curation was made, out of a predefined choice."
         },
         "comment": {
-          "type": "string"
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "A comment explaining this [LicenseFindingCuration].",
+          "title": "Comment"
         }
       },
       "required": [
         "path",
         "concluded_license",
         "reason"
-      ]
+      ],
+      "title": "LicenseFindingCuration",
+      "type": "object"
     },
-    "pathIncludeReason": {
+    "LicenseFindingCurationReason": {
+      "description": "A curation for a license finding. Use it to correct a license finding or to add a license that was not\npreviously detected.\n\nAttributes:\n    CODE: The findings occur in source code, for example the name of a variable.\n    DATA_OF: The findings occur in a data, for example a JSON object defining all SPDX licenses.\n    DOCUMENTATION_OF: The findings occur in documentation, for example in code comments or in the README.md.\n    INCORRECT: The detected licenses are not correct. Use only if none of the other reasons apply.\n    NOT_DETECTED: Add applicable license as the scanner did not detect it.\n    REFERENCE: The findings reference a file or URL, e.g. SEE LICENSE IN LICENSE or https://jquery.org/license/.",
       "enum": [
-        "SOURCE_OF"
-      ]
+        "CODE",
+        "DATA_OF",
+        "DOCUMENTATION_OF",
+        "INCORRECT",
+        "NOT_DETECTED",
+        "REFERENCE"
+      ],
+      "title": "LicenseFindingCurationReason",
+      "type": "string"
     },
-    "pathExcludeReason": {
+    "OrtAnalyzerConfigurations": {
+      "additionalProperties": false,
+      "properties": {
+        "allow_dynamic_versions": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Allow Dynamic Versions"
+        },
+        "enabled_package_managers": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/OrtPackageManagers"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Enabled Package Managers"
+        },
+        "disabled_package_managers": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/OrtPackageManagers"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Disabled Package Managers"
+        },
+        "package_managers": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OrtPackageManagerConfigurations"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "sw360_configuration": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Sw360Configuration"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "skip_excluded": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Skip Excluded"
+        }
+      },
+      "title": "OrtAnalyzerConfigurations",
+      "type": "object"
+    },
+    "OrtPackageManagerConfigurations": {
+      "additionalProperties": {
+        "$ref": "#/$defs/PackageManagerConfigs"
+      },
+      "title": "OrtPackageManagerConfigurations",
+      "type": "object"
+    },
+    "OrtPackageManagers": {
+      "description": "Enumeration of supported package managers in ORT.\n\nThis enum represents a variety of package managers across different programming ecosystems.",
+      "enum": [
+        "Bazel",
+        "Bower",
+        "Bundler",
+        "Cargo",
+        "Carthage",
+        "CocoaPods",
+        "Composer",
+        "Conan",
+        "GoMod",
+        "Gradle",
+        "GradleInspector",
+        "Maven",
+        "NPM",
+        "NuGet",
+        "PIP",
+        "Pipenv",
+        "PNPM",
+        "Poetry",
+        "Pub",
+        "SBT",
+        "SpdxDocumentFile",
+        "Stack",
+        "SwiftPM",
+        "Unmanaged",
+        "Yarn",
+        "Yarn2"
+      ],
+      "title": "OrtPackageManagers",
+      "type": "string"
+    },
+    "OrtRepositoryConfigurationExcludes": {
+      "properties": {
+        "paths": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/OrtRepositoryConfigurationExcludesPath"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Paths"
+        },
+        "scopes": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/OrtRepositoryConfigurationExcludesScope"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Scopes"
+        }
+      },
+      "title": "OrtRepositoryConfigurationExcludes",
+      "type": "object"
+    },
+    "OrtRepositoryConfigurationExcludesPath": {
+      "properties": {
+        "pattern": {
+          "description": "A glob to match the path of the project definition file, relative to the root of the repository.",
+          "title": "Pattern",
+          "type": "string"
+        },
+        "reason": {
+          "$ref": "#/$defs/PathExcludeReason"
+        },
+        "comment": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Comment"
+        }
+      },
+      "required": [
+        "pattern",
+        "reason"
+      ],
+      "title": "OrtRepositoryConfigurationExcludesPath",
+      "type": "object"
+    },
+    "OrtRepositoryConfigurationExcludesScope": {
+      "properties": {
+        "pattern": {
+          "title": "Pattern",
+          "type": "string"
+        },
+        "reason": {
+          "$ref": "#/$defs/ScopeExcludeReason"
+        },
+        "comment": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Comment"
+        }
+      },
+      "required": [
+        "pattern",
+        "reason"
+      ],
+      "title": "OrtRepositoryConfigurationExcludesScope",
+      "type": "object"
+    },
+    "OrtRepositoryConfigurationIncludes": {
+      "properties": {
+        "paths": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/OrtRepositoryConfigurationIncludesPath"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Paths"
+        }
+      },
+      "title": "OrtRepositoryConfigurationIncludes",
+      "type": "object"
+    },
+    "OrtRepositoryConfigurationIncludesPath": {
+      "properties": {
+        "pattern": {
+          "description": "A glob to match the path of the project definition file, relative to the root of the repository.",
+          "title": "Pattern",
+          "type": "string"
+        },
+        "reason": {
+          "$ref": "#/$defs/PathIncludeReason"
+        },
+        "comment": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Comment"
+        }
+      },
+      "required": [
+        "pattern",
+        "reason"
+      ],
+      "title": "OrtRepositoryConfigurationIncludesPath",
+      "type": "object"
+    },
+    "OrtRepositoryConfigurationLicenseChoices": {
+      "properties": {
+        "package_license_choices": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/OrtRepositoryConfigurationLicenseChoicesPackageLicenseChoice"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Package License Choices"
+        },
+        "repository_license_choices": {
+          "anyOf": [
+            {
+              "items": {},
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Repository License Choices"
+        }
+      },
+      "title": "OrtRepositoryConfigurationLicenseChoices",
+      "type": "object"
+    },
+    "OrtRepositoryConfigurationLicenseChoicesPackageLicenseChoice": {
+      "properties": {
+        "package_id": {
+          "title": "Package Id",
+          "type": "string"
+        },
+        "license_choices": {
+          "items": {
+            "$ref": "#/$defs/OrtRepositoryConfigurationLicenseChoicesPackageLicenseChoiceLicenseChoice"
+          },
+          "title": "License Choices",
+          "type": "array"
+        }
+      },
+      "required": [
+        "package_id",
+        "license_choices"
+      ],
+      "title": "OrtRepositoryConfigurationLicenseChoicesPackageLicenseChoice",
+      "type": "object"
+    },
+    "OrtRepositoryConfigurationLicenseChoicesPackageLicenseChoiceLicenseChoice": {
+      "properties": {
+        "given": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Given"
+        },
+        "choice": {
+          "title": "Choice",
+          "type": "string"
+        }
+      },
+      "required": [
+        "choice"
+      ],
+      "title": "OrtRepositoryConfigurationLicenseChoicesPackageLicenseChoiceLicenseChoice",
+      "type": "object"
+    },
+    "OrtRepositoryConfigurationSnippetChoice": {
+      "properties": {
+        "provenance": {
+          "$ref": "#/$defs/OrtRepositoryConfigurationSnippetChoiceProvenance"
+        },
+        "choices": {
+          "items": {
+            "$ref": "#/$defs/OrtRepositoryConfigurationSnippetChoiceChoice"
+          },
+          "title": "Choices",
+          "type": "array"
+        }
+      },
+      "required": [
+        "provenance",
+        "choices"
+      ],
+      "title": "OrtRepositoryConfigurationSnippetChoice",
+      "type": "object"
+    },
+    "OrtRepositoryConfigurationSnippetChoiceChoice": {
+      "properties": {
+        "given": {
+          "$ref": "#/$defs/OrtRepositoryConfigurationSnippetChoiceChoiceGiven"
+        },
+        "choice": {
+          "$ref": "#/$defs/OrtRepositoryConfigurationSnippetChoiceChoiceChoice"
+        }
+      },
+      "required": [
+        "given",
+        "choice"
+      ],
+      "title": "OrtRepositoryConfigurationSnippetChoiceChoice",
+      "type": "object"
+    },
+    "OrtRepositoryConfigurationSnippetChoiceChoiceChoice": {
+      "properties": {
+        "purl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Purl"
+        },
+        "reason": {
+          "$ref": "#/$defs/SnippetChoiceReason"
+        },
+        "comment": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Comment"
+        }
+      },
+      "required": [
+        "reason"
+      ],
+      "title": "OrtRepositoryConfigurationSnippetChoiceChoiceChoice",
+      "type": "object"
+    },
+    "OrtRepositoryConfigurationSnippetChoiceChoiceGiven": {
+      "properties": {
+        "source_location": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OrtRepositoryConfigurationSnippetChoiceChoiceGivenSourceLocation"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "OrtRepositoryConfigurationSnippetChoiceChoiceGiven",
+      "type": "object"
+    },
+    "OrtRepositoryConfigurationSnippetChoiceChoiceGivenSourceLocation": {
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "start_line": {
+          "title": "Start Line",
+          "type": "integer"
+        },
+        "end_line": {
+          "title": "End Line",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "start_line",
+        "end_line"
+      ],
+      "title": "OrtRepositoryConfigurationSnippetChoiceChoiceGivenSourceLocation",
+      "type": "object"
+    },
+    "OrtRepositoryConfigurationSnippetChoiceProvenance": {
+      "properties": {
+        "url": {
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "title": "OrtRepositoryConfigurationSnippetChoiceProvenance",
+      "type": "object"
+    },
+    "PackageCuration": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "curations": {
+          "$ref": "#/$defs/PackageCurationData"
+        }
+      },
+      "required": [
+        "id",
+        "curations"
+      ],
+      "title": "PackageCuration",
+      "type": "object"
+    },
+    "PackageCurationData": {
+      "additionalProperties": false,
+      "properties": {
+        "comment": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Comment"
+        },
+        "purl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Purl"
+        },
+        "cpe": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cpe"
+        },
+        "authors": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Authors"
+        },
+        "concluded_license": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Concluded License"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "homepage_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Homepage Url"
+        },
+        "binary_artifact": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CurationArtifact"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "source_artifact": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CurationArtifact"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "vcs": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/VcsInfo"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "is_metadata_only": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Is Metadata Only"
+        },
+        "is_modified": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Is Modified"
+        },
+        "declared_license_mapping": {
+          "additionalProperties": true,
+          "title": "Declared License Mapping",
+          "type": "object"
+        },
+        "source_code_origins": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/SourceCodeOrigin"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Code Origins"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Labels",
+          "type": "object"
+        }
+      },
+      "title": "PackageCurationData",
+      "type": "object"
+    },
+    "PackageManagerConfigs": {
+      "additionalProperties": false,
+      "properties": {
+        "mustRunAfter": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/OrtPackageManagers"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mustrunafter"
+        },
+        "options": {
+          "anyOf": [
+            {},
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Options"
+        }
+      },
+      "title": "PackageManagerConfigs",
+      "type": "object"
+    },
+    "PathExcludeReason": {
       "enum": [
         "BUILD_TOOL_OF",
         "DATA_FILE_OF",
@@ -300,9 +902,270 @@
         "PROVIDED_BY",
         "TEST_OF",
         "TEST_TOOL_OF"
-      ]
+      ],
+      "title": "PathExcludeReason",
+      "type": "string"
     },
-    "scopeExcludeReason": {
+    "PathIncludeReason": {
+      "enum": [
+        "SOURCE_OF"
+      ],
+      "title": "PathIncludeReason",
+      "type": "string"
+    },
+    "ResolutionsSchema": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ResolutionsSchemaResolutionsSchema"
+        },
+        {
+          "$ref": "#/$defs/ResolutionsSchemaResolutionsSchema1"
+        },
+        {
+          "$ref": "#/$defs/ResolutionsSchemaResolutionsSchema2"
+        }
+      ],
+      "description": "The OSS-Review-Toolkit (ORT) provides a possibility to resolve issues, rule violations and security vulnerabilities in a resolutions file. A full list of all available options can be found at https://oss-review-toolkit.org/ort/docs/configuration/resolutions.",
+      "title": "ResolutionsSchema"
+    },
+    "ResolutionsSchemaResolutionsSchema": {
+      "properties": {
+        "issues": {
+          "items": {
+            "$ref": "#/$defs/ResolutionsSchemaResolutionsSchemaIssue"
+          },
+          "title": "Issues",
+          "type": "array"
+        },
+        "rule_violations": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/ResolutionsSchemaResolutionsSchemaRuleViolation"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rule Violations"
+        },
+        "vulnerabilities": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/ResolutionsSchemaResolutionsSchemaVulnerability"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Vulnerabilities"
+        }
+      },
+      "required": [
+        "issues"
+      ],
+      "title": "ResolutionsSchemaResolutionsSchema",
+      "type": "object"
+    },
+    "ResolutionsSchemaResolutionsSchema1": {
+      "properties": {
+        "issues": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/ResolutionsSchemaResolutionsSchemaIssue"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Issues"
+        },
+        "rule_violations": {
+          "items": {
+            "$ref": "#/$defs/ResolutionsSchemaResolutionsSchemaRuleViolation"
+          },
+          "title": "Rule Violations",
+          "type": "array"
+        },
+        "vulnerabilities": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/ResolutionsSchemaResolutionsSchemaVulnerability"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Vulnerabilities"
+        }
+      },
+      "required": [
+        "rule_violations"
+      ],
+      "title": "ResolutionsSchemaResolutionsSchema1",
+      "type": "object"
+    },
+    "ResolutionsSchemaResolutionsSchema2": {
+      "properties": {
+        "issues": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/ResolutionsSchemaResolutionsSchemaIssue"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Issues"
+        },
+        "rule_violations": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/ResolutionsSchemaResolutionsSchemaRuleViolation"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rule Violations"
+        },
+        "vulnerabilities": {
+          "items": {
+            "$ref": "#/$defs/ResolutionsSchemaResolutionsSchemaVulnerability"
+          },
+          "title": "Vulnerabilities",
+          "type": "array"
+        }
+      },
+      "required": [
+        "vulnerabilities"
+      ],
+      "title": "ResolutionsSchemaResolutionsSchema2",
+      "type": "object"
+    },
+    "ResolutionsSchemaResolutionsSchemaIssue": {
+      "properties": {
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "reason": {
+          "$ref": "#/$defs/IssueResolutionReason"
+        },
+        "comment": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Comment"
+        }
+      },
+      "required": [
+        "message",
+        "reason"
+      ],
+      "title": "ResolutionsSchemaResolutionsSchemaIssue",
+      "type": "object"
+    },
+    "ResolutionsSchemaResolutionsSchemaRuleViolation": {
+      "properties": {
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "reason": {
+          "$ref": "#/$defs/RuleViolationResolutionReason"
+        },
+        "comment": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Comment"
+        }
+      },
+      "required": [
+        "message",
+        "reason"
+      ],
+      "title": "ResolutionsSchemaResolutionsSchemaRuleViolation",
+      "type": "object"
+    },
+    "ResolutionsSchemaResolutionsSchemaVulnerability": {
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "reason": {
+          "$ref": "#/$defs/VulnerabilityResolutionReason"
+        },
+        "comment": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Comment"
+        }
+      },
+      "required": [
+        "id",
+        "reason"
+      ],
+      "title": "ResolutionsSchemaResolutionsSchemaVulnerability",
+      "type": "object"
+    },
+    "RuleViolationResolutionReason": {
+      "enum": [
+        "CANT_FIX_EXCEPTION",
+        "DYNAMIC_LINKAGE_EXCEPTION",
+        "EXAMPLE_OF_EXCEPTION",
+        "LICENSE_ACQUIRED_EXCEPTION",
+        "NOT_MODIFIED_EXCEPTION",
+        "PATENT_GRANT_EXCEPTION"
+      ],
+      "title": "RuleViolationResolutionReason",
+      "type": "string"
+    },
+    "ScopeExcludeReason": {
       "enum": [
         "BUILD_DEPENDENCY_OF",
         "DEV_DEPENDENCY_OF",
@@ -310,24 +1173,264 @@
         "PROVIDED_DEPENDENCY_OF",
         "TEST_DEPENDENCY_OF",
         "RUNTIME_DEPENDENCY_OF"
-      ]
+      ],
+      "title": "ScopeExcludeReason",
+      "type": "string"
     },
-    "licenseFindingCurationReason": {
-      "enum": [
-        "CODE",
-        "DATA_OF",
-        "DOCUMENTATION_OF",
-        "INCORRECT",
-        "NOT_DETECTED",
-        "REFERENCE"
-      ]
-    },
-    "snippetChoiceReason": {
+    "SnippetChoiceReason": {
       "enum": [
         "NO_RELEVANT_FINDING",
         "ORIGINAL_FINDING",
         "OTHER"
-      ]
+      ],
+      "title": "SnippetChoiceReason",
+      "type": "string"
+    },
+    "SourceCodeOrigin": {
+      "enum": [
+        "VCS",
+        "ARTIFACT"
+      ],
+      "title": "SourceCodeOrigin",
+      "type": "string"
+    },
+    "Sw360Configuration": {
+      "additionalProperties": false,
+      "properties": {
+        "restUrl": {
+          "format": "uri",
+          "minLength": 1,
+          "title": "Resturl",
+          "type": "string"
+        },
+        "authUrl": {
+          "format": "uri",
+          "minLength": 1,
+          "title": "Authurl",
+          "type": "string"
+        },
+        "username": {
+          "title": "Username",
+          "type": "string"
+        },
+        "password": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Password"
+        },
+        "clientId": {
+          "title": "Clientid",
+          "type": "string"
+        },
+        "clientPassword": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Clientpassword"
+        },
+        "token": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Token"
+        }
+      },
+      "required": [
+        "restUrl",
+        "authUrl",
+        "username",
+        "clientId"
+      ],
+      "title": "Sw360Configuration",
+      "type": "object"
+    },
+    "VcsInfo": {
+      "description": "Bundles general Version Control System information.\n\nAttributes:\n    type(VcsType): The type of the VCS, for example Git, GitRepo, Mercurial, etc.\n    url(AnyUrl): The URL to the VCS repository.\n    revision(str): The VCS-specific revision (tag, branch, SHA1) that the version of the package maps to.\n    path(str): The path inside the VCS to take into account.\n        If the VCS supports checking out only a subdirectory, only this path is checked out.",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/VcsType",
+          "description": "The type of the VCS, for example Git, GitRepo, Mercurial, etc."
+        },
+        "url": {
+          "description": "The URL to the VCS repository.",
+          "format": "uri",
+          "minLength": 1,
+          "title": "Url",
+          "type": "string"
+        },
+        "revision": {
+          "description": "The VCS-specific revision (tag, branch, SHA1) that the version of the package maps to.",
+          "title": "Revision",
+          "type": "string"
+        },
+        "path": {
+          "default": "",
+          "description": "The path inside the VCS to take into account.If the VCS supports checking out only a subdirectory, only this path is checked out.",
+          "title": "Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "url",
+        "revision"
+      ],
+      "title": "VcsInfo",
+      "type": "object"
+    },
+    "VcsType": {
+      "description": "A class for Version Control System types. Each type has one or more [aliases] associated to it,\nwhere the first alias is the definite name. This class is not implemented as an enum as\nconstructing from an unknown type should be supported while maintaining that type as the primary\nalias for the string representation.\n\nAttributes:\n    aliases(list[str]): Primary name and aliases",
+      "properties": {
+        "aliases": {
+          "description": "Primary name and aliases",
+          "items": {
+            "type": "string"
+          },
+          "title": "Aliases",
+          "type": "array"
+        }
+      },
+      "title": "VcsType",
+      "type": "object"
+    },
+    "VulnerabilityResolutionReason": {
+      "enum": [
+        "CANT_FIX_VULNERABILITY",
+        "INEFFECTIVE_VULNERABILITY",
+        "INVALID_MATCH_VULNERABILITY",
+        "MITIGATED_VULNERABILITY",
+        "NOT_A_VULNERABILITY",
+        "WILL_NOT_FIX_VULNERABILITY",
+        "WORKAROUND_FOR_VULNERABILITY"
+      ],
+      "title": "VulnerabilityResolutionReason",
+      "type": "string"
     }
-  }
+  },
+  "description": "Represents the configuration for an OSS-Review-Toolkit (ORT) repository.\n\nThis class defines various configuration options for analyzing, including, excluding,\nresolving, and curating artifacts in a repository. It also provides settings for package\nconfigurations, license choices, and snippet choices.\n\nUsage:\n    Instantiate this class to specify repository-level configuration for ORT analysis.\n    Each field corresponds to a specific aspect of the repository's configuration.",
+  "properties": {
+    "analyzer": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/OrtAnalyzerConfigurations"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Define Analyzer specific options"
+    },
+    "includes": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/OrtRepositoryConfigurationIncludes"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Defines which parts of a repository should be included."
+    },
+    "excludes": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/OrtRepositoryConfigurationExcludes"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Defines which parts of a repository should be excluded."
+    },
+    "resolutions": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ResolutionsSchema"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "curations": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Curations"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Defines curations for packages used as dependencies by projects in this repository, or curations for license findings in the source code of a project in this repository."
+    },
+    "package_configurations": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/OrtPackageManagerConfigurations"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "A configuration for a specific package and provenance.",
+      "title": "Package Configurations"
+    },
+    "license_choices": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/OrtRepositoryConfigurationLicenseChoices"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "A configuration to select a license from a multi-licensed package."
+    },
+    "snippet_choices": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/OrtRepositoryConfigurationSnippetChoice"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "A configuration to select a snippet from a package with multiple snippet findings.",
+      "title": "Snippet Choices"
+    }
+  },
+  "title": "OrtRepositoryConfiguration",
+  "type": "object"
 }

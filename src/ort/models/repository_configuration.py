@@ -7,9 +7,9 @@ from typing import Any
 
 from pydantic import BaseModel, Field, RootModel
 
-from .analyzer_configurations import OrtAnalyzerConfigurations
-from .package_managers import OrtPackageManagerConfigurations, PackageManagerConfigs
-from .source_code_origin import SourceCodeOrigin
+from ort.models.analyzer_configurations import OrtAnalyzerConfigurations
+from ort.models.config.curations import Curations
+from ort.models.package_managers import OrtPackageManagerConfigurations, PackageManagerConfigs
 
 
 class OrtRepositoryConfigurationLicenseChoicesPackageLicenseChoiceLicenseChoice(BaseModel):
@@ -66,45 +66,6 @@ class VulnerabilityResolutionReason(Enum):
     workaround_for_vulnerability = "WORKAROUND_FOR_VULNERABILITY"
 
 
-class VcsMatcherVcsMatcher(BaseModel):
-    path: str | None = None
-    revision: str | None = None
-    type: str
-    url: str | None = None
-
-
-class VcsMatcherVcsMatcher1(BaseModel):
-    path: str | None = None
-    revision: str | None = None
-    type: str | None = None
-    url: str
-
-
-class VcsMatcherVcsMatcher2(BaseModel):
-    path: str | None = None
-    revision: str
-    type: str | None = None
-    url: str | None = None
-
-
-class VcsMatcherVcsMatcher3(BaseModel):
-    path: str
-    revision: str | None = None
-    type: str | None = None
-    url: str | None = None
-
-
-class VcsMatcher(
-    RootModel[VcsMatcherVcsMatcher | VcsMatcherVcsMatcher1 | VcsMatcherVcsMatcher2 | VcsMatcherVcsMatcher3]
-):
-    root: VcsMatcherVcsMatcher | VcsMatcherVcsMatcher1 | VcsMatcherVcsMatcher2 | VcsMatcherVcsMatcher3
-
-
-class Hash(BaseModel):
-    value: str
-    algorithm: str
-
-
 class PackageConfigurationSchemaSourceCodeOrigin(Enum):
     vcs = "VCS"
     artifact = "ARTIFACT"
@@ -139,24 +100,6 @@ class PathExcludeReason(Enum):
     provided_by = "PROVIDED_BY"
     test_of = "TEST_OF"
     test_tool_of = "TEST_TOOL_OF"
-
-
-VcsMatcherVcsMatcher4 = VcsMatcherVcsMatcher
-
-
-VcsMatcherVcsMatcher5 = VcsMatcherVcsMatcher1
-
-
-VcsMatcherVcsMatcher6 = VcsMatcherVcsMatcher2
-
-
-VcsMatcherVcsMatcher7 = VcsMatcherVcsMatcher3
-
-
-class VcsMatcherModel(
-    RootModel[VcsMatcherVcsMatcher4 | VcsMatcherVcsMatcher5 | VcsMatcherVcsMatcher6 | VcsMatcherVcsMatcher7]
-):
-    root: VcsMatcherVcsMatcher4 | VcsMatcherVcsMatcher5 | VcsMatcherVcsMatcher6 | VcsMatcherVcsMatcher7
 
 
 class PathIncludeReason(Enum):
@@ -301,47 +244,6 @@ class ResolutionsSchema(
     )
 
 
-class CurationsSchemaCurationsSchemaItemCurationsBinaryArtifact(BaseModel):
-    url: str
-    hash: Hash
-
-
-CurationsSchemaCurationsSchemaItemCurationsSourceArtifact = CurationsSchemaCurationsSchemaItemCurationsBinaryArtifact
-
-
-class CurationsSchemaCurationsSchemaItemCurations(BaseModel):
-    comment: str | None = None
-    purl: str | None = None
-    cpe: str | None = None
-    authors: list[str] | None = None
-    concluded_license: str | None = None
-    description: str | None = None
-    homepage_url: str | None = None
-    binary_artifact: CurationsSchemaCurationsSchemaItemCurationsBinaryArtifact | None = None
-    source_artifact: CurationsSchemaCurationsSchemaItemCurationsSourceArtifact | None = None
-    vcs: VcsMatcher | None = None
-    is_metadata_only: bool | None = None
-    is_modified: bool | None = None
-    declared_license_mapping: dict[str, Any] = Field(default_factory=dict)
-    source_code_origins: list[SourceCodeOrigin] | None = None
-    labels: dict[str, str] = Field(default_factory=dict)
-
-
-class CurationsSchemaCurationsSchemaItem(BaseModel):
-    id: str
-    curations: CurationsSchemaCurationsSchemaItemCurations
-
-
-class CurationsSchema(RootModel[list[CurationsSchemaCurationsSchemaItem]]):
-    root: list[CurationsSchemaCurationsSchemaItem] = Field(
-        ...,
-        description="The OSS-Review-Toolkit (ORT) provides a possibility to correct metadata and set "
-        "the concluded license for specific packages (dependencies) in curation files. A full list of all available "
-        "options can be found at https://oss-review-toolkit.org/ort/docs/configuration/package-curations.",
-        title="ORT curations",
-    )
-
-
 class LicenseFindingCurationsModel(BaseModel):
     path: str
     start_lines: int | str | None = None
@@ -352,14 +254,14 @@ class LicenseFindingCurationsModel(BaseModel):
     comment: str | None = None
 
 
-class OrtRepositoryConfigurationCurations(BaseModel):
+class OrtRepositoryConfigurationH(BaseModel):
     license_findings: list[LicenseFindingCurationsModel]
-    packages: CurationsSchema | None = None
+    packages: Curations | None = None
 
 
 class OrtRepositoryConfigurationCurations1(BaseModel):
     license_findings: list[LicenseFindingCurationsModel] | None = None
-    packages: CurationsSchema
+    packages: Curations
 
 
 class OrtRepositoryConfiguration(BaseModel):
@@ -388,9 +290,10 @@ class OrtRepositoryConfiguration(BaseModel):
         description="Defines which parts of a repository should be excluded.",
     )
     resolutions: ResolutionsSchema | None = None
-    curations: OrtRepositoryConfigurationCurations | OrtRepositoryConfigurationCurations1 | None = Field(
+    curations: Curations | None = Field(
         None,
-        description="Curations for artifacts in a repository.",
+        description="Defines curations for packages used as dependencies by projects in this repository,"
+        " or curations for license findings in the source code of a project in this repository.",
     )
     package_configurations: list[OrtPackageManagerConfigurations] | None = Field(
         None,

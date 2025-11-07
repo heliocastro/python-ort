@@ -7,7 +7,7 @@ packages = ["src/ort"]
 
 [project]
 name = "python-ort"
-version = "0.2.0"
+version = "0.3.0"
 description = "A Python Ort model serialization library"
 readme = "README.md"
 license = "MIT"
@@ -15,7 +15,6 @@ license-files = ["LICENSE"]
 requires-python = ">=3.10"
 dependencies = [
     "pydantic>=2.12.4",
-    "pyyaml>=6.0.3",
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -25,6 +24,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
@@ -39,7 +39,7 @@ dev = [
     "pycodestyle>=2.14.0",
     "pyrefly>=0.40.0",
     "pytest>=8.4.2",
-    "ruff>=0.14.3",
+    "ruff>=0.14.4",
     "types-pyyaml>=6.0.12.20250915",
 ]
 
