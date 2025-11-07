@@ -2,10 +2,8 @@
 # SPDX-License-Identifier: MIT
 
 from pathlib import Path
-from typing import Any
 
 import pytest
-import yaml
 
 from ort.models.repository_configuration import (
     OrtRepositoryConfiguration,
@@ -13,22 +11,9 @@ from ort.models.repository_configuration import (
     OrtRepositoryConfigurationIncludesPath,
     PathIncludeReason,
 )
+from tests.utils.load_yaml_config import load_yaml_config  # type: ignore
 
 REPO_CONFIG_DIR = Path(__file__).parent / "data" / "repo_config"
-
-
-def load_yaml_config(filename) -> Any:
-    """
-    Load a YAML configuration file from the REPO_CONFIG_DIR directory.
-
-    Args:
-        filename (str): The name of the YAML file to load.
-
-    Returns:
-        object: The parsed YAML data as a Python object (usually dict).
-    """
-    with (REPO_CONFIG_DIR / filename).open() as f:
-        return yaml.safe_load(f)
 
 
 def test_only_include_valid():
@@ -37,7 +22,10 @@ def test_only_include_valid():
     Verifies that the pattern, reason, and comment fields are present and have expected values,
     and that the model objects are instantiated without error and contain the correct data.
     """
-    config_data = load_yaml_config("only_include.yml")
+    config_data = load_yaml_config(
+        filename="only_include.yml",
+        data_dir=REPO_CONFIG_DIR,
+    )
     includes = config_data.get("includes", {})
     if "paths" not in includes:
         pytest.fail("Missing 'paths' in includes")
@@ -80,7 +68,7 @@ def test_only_include_reason_fail():
     raises a ValueError when instantiating OrtRepositoryConfigurationIncludesPath.
     The test expects failure when 'reason' is not a valid PathIncludeReason enum.
     """
-    config_data = load_yaml_config("only_include_reason_fail.yml")
+    config_data = load_yaml_config("only_include_reason_fail.yml", REPO_CONFIG_DIR)
     includes = config_data.get("includes", {})
     if "paths" not in includes:
         pytest.fail("Missing 'paths' in includes")

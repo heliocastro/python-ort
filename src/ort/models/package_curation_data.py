@@ -7,7 +7,7 @@ from pydantic import AnyUrl, BaseModel, ConfigDict, Field
 
 from .hash import Hash
 from .source_code_origin import SourceCodeOrigin
-from .vcsinfo import VcsInfo
+from .vcsinfo_curation_data import VcsInfoCurationData
 
 
 class CurationArtifact(BaseModel):
@@ -28,7 +28,7 @@ class PackageCurationData(BaseModel):
     homepage_url: str | None = None
     binary_artifact: CurationArtifact | None = None
     source_artifact: CurationArtifact | None = None
-    vcs: VcsInfo | None = None
+    vcs: VcsInfoCurationData | None = None
     is_metadata_only: bool | None = None
     is_modified: bool | None = None
     declared_license_mapping: dict[str, Any] = Field(default_factory=dict)
