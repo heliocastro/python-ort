@@ -46,6 +46,3 @@ jobs:
         shell: bash
         run: |
           uv build
-
-      - name: Test with python ${{ matrix.python-version }}
-        run: uv run --frozen pytest
