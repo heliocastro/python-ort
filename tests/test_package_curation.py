@@ -19,7 +19,7 @@ def test_ort_docs_simple_curation_example():
     try:
         Curations(packages=config_data)
     except ValidationError as e:
-        pytest.fail(f"Failed to instantiate OrtRepositoryConfiguration: {e}")
+        pytest.fail(f"Failed to instantiate Curations: {e}")
 
 
 def test_ort_docs_curation_example():
@@ -32,4 +32,4 @@ def test_ort_docs_curation_example():
     try:
         Curations(packages=config_data)
     except ValidationError as e:
-        pytest.fail(f"Failed to instantiate OrtRepositoryConfiguration: {e}")
+        pytest.fail(f"Failed to instantiate Curations: {e}")

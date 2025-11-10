@@ -7,9 +7,9 @@ from typing import Any
 
 from pydantic import BaseModel, Field, RootModel
 
-from ort.models.analyzer_configurations import OrtAnalyzerConfigurations
 from ort.models.config.curations import Curations
-from ort.models.package_managers import OrtPackageManagerConfigurations, PackageManagerConfigs
+from ort.models.config.package_configuration import PackageConfiguration
+from ort.models.config.repository_analyzer_configuration import RepositoryAnalyzerConfiguration
 
 
 class OrtRepositoryConfigurationLicenseChoicesPackageLicenseChoiceLicenseChoice(BaseModel):
@@ -170,10 +170,6 @@ class OrtRepositoryConfigurationSnippetChoice(BaseModel):
     choices: list[OrtRepositoryConfigurationSnippetChoiceChoice]
 
 
-class PackageManagerConfigurationSchema(RootModel[dict[str, PackageManagerConfigs]]):
-    root: dict[str, PackageManagerConfigs]
-
-
 class ResolutionsSchemaResolutionsSchemaIssue(BaseModel):
     message: str
     reason: IssueResolutionReason
@@ -277,7 +273,7 @@ class OrtRepositoryConfiguration(BaseModel):
         Each field corresponds to a specific aspect of the repository's configuration.
     """
 
-    analyzer: OrtAnalyzerConfigurations | None = Field(
+    analyzer: RepositoryAnalyzerConfiguration | None = Field(
         None,
         description="Define Analyzer specific options",
     )
@@ -295,8 +291,8 @@ class OrtRepositoryConfiguration(BaseModel):
         description="Defines curations for packages used as dependencies by projects in this repository,"
         " or curations for license findings in the source code of a project in this repository.",
     )
-    package_configurations: list[OrtPackageManagerConfigurations] | None = Field(
-        None,
+    package_configurations: list[PackageConfiguration] = Field(
+        default_factory=list,
         description="A configuration for a specific package and provenance.",
     )
     license_choices: OrtRepositoryConfigurationLicenseChoices | None = Field(

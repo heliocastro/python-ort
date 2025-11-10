@@ -11,8 +11,6 @@ import yaml
 import yaml.parser
 from pydantic import AnyUrl, BaseModel, ConfigDict, Field, RootModel
 
-from .package_managers import OrtPackageManagerConfigurations, OrtPackageManagers
-
 
 class AdvisorConfig(RootModel[dict[str, dict[str, Any]] | None]):
     root: dict[str, dict[str, Any]] | None = None
@@ -200,9 +198,10 @@ class AnalyzerConfigurationSchema(BaseModel):
         extra="forbid",
     )
     allow_dynamic_versions: Annotated[bool | None, Field(alias="allowDynamicVersions")] = None
-    enabled_package_managers: Annotated[list[OrtPackageManagers] | None, Field(alias="enabledPackageManagers")] = None
-    disabled_package_managers: Annotated[list[OrtPackageManagers] | None, Field(alias="disabledPackageManagers")] = None
-    package_managers: Annotated[OrtPackageManagerConfigurations | None, Field(alias="packageManagers")] = None
+    # enabled_package_managers: Annotated[list[PackageManager] | None, Field(alias="enabledPackageManagers")] = None
+    # # disabled_package_managers: Annotated[list[OrtPackageManagers] | None,
+    # Field(alias="disabledPackageManagers")] = None
+    # package_managers: Annotated[OrtPackageManagerConfigurations | None, Field(alias="packageManagers")] = None
     sw360_configuration: Annotated[Sw360Configuration | None, Field(alias="sw360Configuration")] = None
     skip_excluded: Annotated[bool | None, Field(alias="skipExcluded")] = None
 
