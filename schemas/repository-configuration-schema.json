@@ -796,7 +796,7 @@
         "vcs": {
           "anyOf": [
             {
-              "$ref": "#/$defs/VcsInfo"
+              "$ref": "#/$defs/VcsInfoCurationData"
             },
             {
               "type": "null"
@@ -1263,49 +1263,72 @@
       "title": "Sw360Configuration",
       "type": "object"
     },
-    "VcsInfo": {
+    "VcsInfoCurationData": {
       "description": "Bundles general Version Control System information.\n\nAttributes:\n    type(VcsType): The type of the VCS, for example Git, GitRepo, Mercurial, etc.\n    url(AnyUrl): The URL to the VCS repository.\n    revision(str): The VCS-specific revision (tag, branch, SHA1) that the version of the package maps to.\n    path(str): The path inside the VCS to take into account.\n        If the VCS supports checking out only a subdirectory, only this path is checked out.",
       "properties": {
         "type": {
-          "$ref": "#/$defs/VcsType",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/VcsType"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
           "description": "The type of the VCS, for example Git, GitRepo, Mercurial, etc."
         },
         "url": {
+          "anyOf": [
+            {
+              "format": "uri",
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
           "description": "The URL to the VCS repository.",
-          "format": "uri",
-          "minLength": 1,
-          "title": "Url",
-          "type": "string"
+          "title": "Url"
         },
         "revision": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
           "description": "The VCS-specific revision (tag, branch, SHA1) that the version of the package maps to.",
-          "title": "Revision",
-          "type": "string"
+          "title": "Revision"
         },
         "path": {
-          "default": "",
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
           "description": "The path inside the VCS to take into account.If the VCS supports checking out only a subdirectory, only this path is checked out.",
-          "title": "Path",
-          "type": "string"
+          "title": "Path"
         }
       },
-      "required": [
-        "url",
-        "revision"
-      ],
-      "title": "VcsInfo",
+      "title": "VcsInfoCurationData",
       "type": "object"
     },
     "VcsType": {
-      "description": "A class for Version Control System types. Each type has one or more [aliases] associated to it,\nwhere the first alias is the definite name. This class is not implemented as an enum as\nconstructing from an unknown type should be supported while maintaining that type as the primary\nalias for the string representation.\n\nAttributes:\n    aliases(list[str]): Primary name and aliases",
+      "description": "A class for Version Control System types. Each type has one or more [aliases] associated to it,\nwhere the first alias is the definite name. This class is not implemented as an enum as\nconstructing from an unknown type should be supported while maintaining that type as the primary\nalias for the string representation.\n\nAttributes:\n    name(str): Primary name and aliases",
       "properties": {
-        "aliases": {
-          "description": "Primary name and aliases",
-          "items": {
-            "type": "string"
-          },
-          "title": "Aliases",
-          "type": "array"
+        "name": {
+          "title": "Name",
+          "type": "string"
         }
       },
       "title": "VcsType",

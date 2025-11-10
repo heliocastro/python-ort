@@ -2,7 +2,9 @@
 # SPDX-License-Identifier: MIT
 
 
-from pydantic import BaseModel, ConfigDict, Field
+from typing import Any
+
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from ort.models.config.license_finding_curation_reason import LicenseFindingCurationReason
 
@@ -59,3 +61,17 @@ class LicenseFindingCuration(BaseModel):
         default=None,
         description="A comment explaining this [LicenseFindingCuration].",
     )
+
+    @field_validator("start_lines", mode="before")
+    @classmethod
+    def parse_start_lines(cls, value: Any) -> list[int] | None:
+        if value is None or value == "":
+            return None
+        if isinstance(value, str):
+            # CSV style split
+            return [int(x.strip()) for x in value.split(",") if x.strip()]
+        if isinstance(value, list):
+            return [int(x) for x in value]
+        if isinstance(value, int):
+            return [value]
+        raise ValueError("start_lines must be a comma-separated string or a list of integers")

@@ -16,6 +16,27 @@ class CurationArtifact(BaseModel):
 
 
 class PackageCurationData(BaseModel):
+    """
+    Data model for package curation data.
+
+    Attributes:
+        comment (str | None): Optional comment about the curation.
+        purl (str | None): The package URL (PURL) identifying the package.
+        cpe (str | None): The Common Platform Enumeration (CPE) identifier.
+        authors (list[str] | None): List of authors of the package.
+        concluded_license (str | None): The license concluded for the package.
+        description (str | None): Description of the package.
+        homepage_url (str | None): URL of the package's homepage.
+        binary_artifact (CurationArtifact | None): Information about the binary artifact.
+        source_artifact (CurationArtifact | None): Information about the source artifact.
+        vcs (VcsInfoCurationData | None): Version control system information.
+        is_metadata_only (bool | None): Whether the curation is metadata only.
+        is_modified (bool | None): Whether the package has been modified.
+        declared_license_mapping (dict[str, Any]): Mapping of declared licenses.
+        source_code_origins (list[SourceCodeOrigin] | None): List of source code origins.
+        labels (dict[str, str]): Additional labels for the package.
+    """
+
     model_config = ConfigDict(
         extra="forbid",
     )
