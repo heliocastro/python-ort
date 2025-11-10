@@ -31,7 +31,7 @@
   curations:
     comment: 'Repository moved to https://gitlab.ow2.org.'
     vcs:
-      type: 'Giot'
+      type: 'Git'
       url: 'https://gitlab.ow2.org/asm/asm.git'
 
 - id: 'NPM::ast-traverse:0.1.0'
