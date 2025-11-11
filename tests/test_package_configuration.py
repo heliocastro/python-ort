@@ -10,7 +10,10 @@ from tests.utils.load_yaml_config import load_yaml_config  # type: ignore
 
 
 def test_ort_docs_simple_package_configuration():
-    config_data = load_yaml_config("example_simple_package_config.yml")
+    config_data = load_yaml_config(
+        filename="example_simple_package_config.yml",
+        data_dir="repo_config",
+    )
 
     try:
         for data in config_data.get("package_configurations"):

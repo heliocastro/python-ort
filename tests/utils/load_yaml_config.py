@@ -10,7 +10,7 @@ import yaml
 DATA_CONFIG_DIR = Path(__file__).parent.parent / "data"
 
 
-def load_yaml_config(filename: str, data_dir: Path = DATA_CONFIG_DIR) -> Any:
+def load_yaml_config(filename: str, data_dir: Path | None = None) -> Any:
     """
     Load a YAML configuration file from the REPO_CONFIG_DIR directory.
 
@@ -20,8 +20,13 @@ def load_yaml_config(filename: str, data_dir: Path = DATA_CONFIG_DIR) -> Any:
     Returns:
         object: The parsed YAML data as a Python object (usually dict).
     """
+
+    data_dir_resolved: Path = DATA_CONFIG_DIR
+    if data_dir:
+        data_dir_resolved = data_dir_resolved / data_dir
+
     try:
-        with (data_dir / filename).open() as f:
+        with (data_dir_resolved / filename).open() as f:
             return yaml.safe_load(f)
     except OSError:
         pytest.fail("Fail to load test assets.")
