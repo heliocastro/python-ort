@@ -29,7 +29,8 @@ class PackageManagerConfiguration(BaseModel):
 
     @field_validator("options", mode="before")
     @classmethod
-    def convert_bools_to_str(cls, value: Any) -> Any:
+    def convert_to_str(cls, value: Any) -> Any:
         if not isinstance(value, dict):
             return value
-        return {k: str(v).lower() if isinstance(v, bool) else v for k, v in value.items()}
+        for key, item in value.items():
+            return {k: str(v).lower() if not isinstance(v, str) else v for k, v in value.items()}
