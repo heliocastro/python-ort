@@ -2,7 +2,9 @@
 # SPDX-License-Identifier: MIT
 
 
-from pydantic import BaseModel, ConfigDict, Field
+from typing import Any
+
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 class PackageManagerConfiguration(BaseModel):
@@ -24,3 +26,10 @@ class PackageManagerConfiguration(BaseModel):
         description="Custom configuration options for the package manager. See the documentation of the respective"
         "class for available options.",
     )
+
+    @field_validator("options", mode="before")
+    @classmethod
+    def convert_bools_to_str(cls, value: Any) -> Any:
+        if not isinstance(value, dict):
+            return value
+        return {k: str(v).lower() if isinstance(v, bool) else v for k, v in value.items()}

@@ -1,0 +1,24 @@
+analyzer:
+  package_managers:
+    Conan:
+      options:
+        lockfileName: lockfile.lock
+    PIP:
+      options:
+        analyzeSetupPyInsecurely: false
+        pythonVersion: '3.10'
+  enabled_package_managers:
+    - Conan
+    - PIP
+  skip_excluded: true
+excludes:
+  paths:
+    - pattern: '**/examples/**'
+      reason: OTHER
+      comment: Examples are not in scan scope
+    - pattern: '**/conanfile_*.py'
+      reason: TEST_OF
+      comment: Test files are not in scan scope
+    - pattern: '**/doc/**'
+      reason: OTHER
+      comment: Documentation not in scan scope
