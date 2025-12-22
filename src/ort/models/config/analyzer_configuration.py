@@ -38,11 +38,9 @@ _package_managers: list[str] = [
 
 class AnalyzerConfiguration(BaseModel):
     """
-    Enable the analysis of projects that use version ranges to declare their dependencies. If set to true,
-    dependencies of exactly the same project might change with another scan done at a later time if any of the
-    (transitive) dependencies are declared using version ranges and a new version of such a dependency was
-    published in the meantime. If set to false, analysis of projects that use version ranges will fail. Defaults to
-    false.
+    The configuration model of the analyzer. This class is (de-)serialized in the following places:
+    - Deserialized from "config.yml" as part of [OrtConfiguration] (via Hoplite).
+    - (De-)Serialized as part of [org.ossreviewtoolkit.model.OrtResult] (via Jackson).
     """
 
     model_config = ConfigDict(

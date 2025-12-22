@@ -9,3 +9,9 @@ wheels/
 # Virtual environments
 .venv
 .python-version
+
+# Old python requirements
+requirements.txt
+
+# Ort directories
+output

@@ -23,6 +23,7 @@ class Identifier(BaseModel):
 
     model_config = ConfigDict(
         extra="forbid",
+        frozen=True,
     )
 
     orttype: str = Field(
