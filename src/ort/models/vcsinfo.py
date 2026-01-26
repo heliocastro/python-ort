@@ -22,8 +22,7 @@ class VcsInfo(BaseModel):
         default_factory=VcsType,
         description="The type of the VCS, for example Git, GitRepo, Mercurial, etc.",
     )
-    url: AnyUrl | str = Field(
-        default="",
+    url: AnyUrl = Field(
         description="The URL to the VCS repository.",
     )
 
