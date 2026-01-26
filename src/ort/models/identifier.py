@@ -62,3 +62,6 @@ class Identifier(BaseModel):
                 "version": parts[3],
             }
         raise TypeError("Identifier must be a dict or a string in the correct format")
+
+    def __str__(self) -> str:
+        return ":".join([self.orttype, self.namespace, self.name, self.version])
