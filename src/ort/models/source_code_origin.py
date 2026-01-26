@@ -5,5 +5,9 @@ from enum import Enum
 
 
 class SourceCodeOrigin(Enum):
+    """
+    An enumeration of supported source code origins.
+    """
+
     vcs = "VCS"
     artifact = "ARTIFACT"

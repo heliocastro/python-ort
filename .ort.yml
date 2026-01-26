@@ -1,0 +1,9 @@
+analyzer:
+  enabled_package_managers:
+    - PIP
+
+excludes:
+  paths:
+    - pattern: 'tests/data/**'
+      comment: 'Test data'
+      reason: TEST_OF

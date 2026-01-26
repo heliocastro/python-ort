@@ -12,7 +12,7 @@ repos:
           - '--fix=lf'
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: 'v0.14.4'
+    rev: 'v0.14.10'
     hooks:
       - id: ruff
         args: [--fix]
@@ -26,7 +26,7 @@ repos:
 
   - repo: https://github.com/astral-sh/uv-pre-commit
     # uv version.
-    rev: 0.9.7
+    rev: 0.9.18
     hooks:
       - id: uv-lock
 
@@ -36,8 +36,9 @@ repos:
       - id: codespell
 
   - repo: https://github.com/facebook/pyrefly-pre-commit
-    rev: 0.0.1
+    rev: 0.46.0
     hooks:
-      - id: pyrefly-typecheck-system
+      - id: pyrefly-check
         name: Pyrefly (type checking)
         pass_filenames: false
+        language: system
