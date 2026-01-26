@@ -14,7 +14,7 @@ class Repository(BaseModel):
 
     Attributes:
         vcs(VcsInfo): Original VCS-related information from the working tree containing the analyzer root.
-        vcs_precessed(VcsInfo): Processed VCS-related information from the working tree containing the analyzer root
+        vcs_processed(VcsInfo): Processed VCS-related information from the working tree containing the analyzer root
             that has e.g. common mistakes corrected.
         nested_repositories(dict[str, VcsInfo]): A map of nested repositories, for example Git submodules or Git-Repo
             modules. The key is the path to the nested repository relative to the root of the main repository.

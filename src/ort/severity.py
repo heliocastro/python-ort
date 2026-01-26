@@ -6,7 +6,7 @@ from enum import Enum, auto
 
 class Severity(Enum):
     """
-    A generic class§ describing a severity, e.g. of issues, sorted from least severe to most severe.
+    A generic class describing a severity, e.g. of issues, sorted from least severe to most severe.
 
     Members:
         HINT: A hint is something that is provided for information only.
