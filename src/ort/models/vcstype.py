@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2025 Helio Chissini de Castro <heliocastro@gmail.com>
 # SPDX-License-Identifier: MIT
 
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field, model_serializer, model_validator
 
 # Define known VCS types as constants
 GIT = ["Git", "GitHub", "GitLab"]
@@ -43,3 +43,8 @@ class VcsType(BaseModel):
             else:
                 return {"name": ""}
         return {"name": ""}
+
+    @model_serializer(mode="plain")
+    def serialize(self):
+        # Serialize as a string instead of an object
+        return self.name
