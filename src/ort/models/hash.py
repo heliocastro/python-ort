@@ -3,7 +3,7 @@
 
 from pydantic import BaseModel, Field
 
-from ort.models.hash_algorithm import HashAlgorithm
+from .hash_algorithm import HashAlgorithm
 
 
 class Hash(BaseModel):

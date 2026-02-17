@@ -3,16 +3,11 @@
 
 from typing import Any
 
-from pydantic import AnyUrl, BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field
 
-from .hash import Hash
+from .remote_artifact import RemoteArtifact
 from .source_code_origin import SourceCodeOrigin
 from .vcsinfo_curation_data import VcsInfoCurationData
-
-
-class CurationArtifact(BaseModel):
-    url: AnyUrl
-    hash: Hash
 
 
 class PackageCurationData(BaseModel):
@@ -47,8 +42,8 @@ class PackageCurationData(BaseModel):
     concluded_license: str | None = None
     description: str | None = None
     homepage_url: str | None = None
-    binary_artifact: CurationArtifact | None = None
-    source_artifact: CurationArtifact | None = None
+    binary_artifact: RemoteArtifact | None = None
+    source_artifact: RemoteArtifact | None = None
     vcs: VcsInfoCurationData | None = None
     is_metadata_only: bool | None = None
     is_modified: bool | None = None

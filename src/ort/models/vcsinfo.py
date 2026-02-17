@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2025 Helio Chissini de Castro <heliocastro@gmail.com>
 # SPDX-License-Identifier: MIT
 
-from pydantic import AnyUrl, BaseModel, Field
+from pydantic import BaseModel, Field
 
 from .vcstype import VcsType
 
@@ -22,7 +22,8 @@ class VcsInfo(BaseModel):
         default_factory=VcsType,
         description="The type of the VCS, for example Git, GitRepo, Mercurial, etc.",
     )
-    url: AnyUrl = Field(
+    url: str = Field(
+        default_factory=str,
         description="The URL to the VCS repository.",
     )
 

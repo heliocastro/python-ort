@@ -4,7 +4,7 @@
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from ort.models.package_reference import PackageReference
+from .package_reference import PackageReference
 
 
 class Scope(BaseModel):

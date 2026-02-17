@@ -4,11 +4,11 @@
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
-from ort.models.dependency_graph_edge import DependencyGraphEdge
-from ort.models.dependency_graph_node import DependencyGraphNode
-from ort.models.dependency_reference import DependencyReference
-from ort.models.identifier import Identifier
-from ort.models.root_dependency_index import RootDependencyIndex
+from .dependency_graph_edge import DependencyGraphEdge
+from .dependency_graph_node import DependencyGraphNode
+from .dependency_reference import DependencyReference
+from .identifier import Identifier
+from .root_dependency_index import RootDependencyIndex
 
 
 class DependencyGraph(BaseModel):

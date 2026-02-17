@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MIT
 
 
-from enum import Enum, auto
+from enum import IntEnum
 
 
-class PackageLinkage(Enum):
+class PackageLinkage(IntEnum):
     """
     A class to denote the linkage type between two packages.
 
@@ -27,7 +27,7 @@ class PackageLinkage(Enum):
             e.g. a subproject of a multi-project.
     """
 
-    DYNAMIC = auto()
-    STATIC = auto()
-    PROJECT_DYNAMIC = auto()
-    PROJECT_STATIC = auto()
+    DYNAMIC = 1
+    STATIC = 2
+    PROJECT_DYNAMIC = 3
+    PROJECT_STATIC = 4

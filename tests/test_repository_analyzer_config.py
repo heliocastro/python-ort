@@ -8,7 +8,7 @@ import pytest
 from pydantic import ValidationError
 
 from ort.models.config.repository_analyzer_configuration import RepositoryAnalyzerConfiguration
-from tests.utils.load_yaml_config import load_yaml_config  # type: ignore
+from tests.utils.load_yaml_config import load_yaml_config
 
 
 def test_boolean_option_conversion():

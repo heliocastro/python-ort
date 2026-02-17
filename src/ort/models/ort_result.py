@@ -4,8 +4,9 @@
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from ort.models.analyzer_run import AnalyzerRun
-from ort.models.repository import Repository
+from .advisor_run import AdvisorRun
+from .analyzer_run import AnalyzerRun
+from .repository import Repository
 
 
 class OrtResult(BaseModel):
@@ -29,4 +30,15 @@ class OrtResult(BaseModel):
     analyzer: AnalyzerRun = Field(
         description="An [AnalyzerRun] containing details about the analyzer that was run using [repository]"
         "as input. Can be null if the [repository] was not yet analyzed."
+    )
+    advisor: AdvisorRun | None = Field(
+        default=None,
+        description="An [AdvisorRun] containing details about the advisor that was run using the result from"
+        "[analyzer] as input. Can be null if no advisor was run.",
+    )
+    labels: dict[str, str] = Field(
+        default_factory=dict,
+        description="User defined labels associated to this result. Labels are not used by ORT itself, "
+        "but can be used in parts of ORT which are customizable by the user, for example in evaluator"
+        "rules or in the notice reporter.",
     )

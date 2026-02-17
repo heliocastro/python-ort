@@ -4,8 +4,8 @@
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from ort.models.repository_configuration import OrtRepositoryConfiguration
-from ort.models.vcsinfo import VcsInfo
+from .repository_configuration import RepositoryConfiguration
+from .vcsinfo import VcsInfo
 
 
 class Repository(BaseModel):
@@ -37,6 +37,6 @@ class Repository(BaseModel):
         description="A map of nested repositories, for example Git submodules or Git-Repo"
         "modules. The key is the path to the nested repository relative to the root of the main repository.",
     )
-    config: OrtRepositoryConfiguration = Field(
+    config: RepositoryConfiguration = Field(
         description="The configuration of the repository, parsed from [ORT_REPO_CONFIG_FILENAME]."
     )

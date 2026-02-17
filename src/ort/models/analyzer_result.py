@@ -4,11 +4,11 @@
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from ort.models.dependency_graph import DependencyGraph
-from ort.models.identifier import Identifier
-from ort.models.issue import Issue
-from ort.models.package import Package
-from ort.models.project import Project
+from .dependency_graph import DependencyGraph
+from .identifier import Identifier
+from .issue import Issue
+from .package import Package
+from .project import Project
 
 
 class AnalyzerResult(BaseModel):

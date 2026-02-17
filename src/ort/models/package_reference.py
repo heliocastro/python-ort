@@ -4,8 +4,8 @@
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from ort.models.issue import Issue
-from ort.models.package_linkage import PackageLinkage
+from .issue import Issue
+from .package_linkage import PackageLinkage
 
 
 class PackageReference(BaseModel):

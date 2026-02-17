@@ -6,7 +6,7 @@ import pytest
 from pydantic import ValidationError
 
 from ort.models.config.curations import Curations
-from tests.utils.load_yaml_config import load_yaml_config  # type: ignore
+from tests.utils.load_yaml_config import load_yaml_config
 
 
 def test_ort_docs_simple_curation_example():

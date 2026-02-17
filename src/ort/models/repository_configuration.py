@@ -260,7 +260,7 @@ class OrtRepositoryConfigurationCurations1(BaseModel):
     packages: Curations
 
 
-class OrtRepositoryConfiguration(BaseModel):
+class RepositoryConfiguration(BaseModel):
     """
     Represents the configuration for an OSS-Review-Toolkit (ORT) repository.
 

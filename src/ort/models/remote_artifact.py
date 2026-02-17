@@ -4,7 +4,7 @@
 
 from pydantic import BaseModel, Field
 
-from ort.models.hash import Hash
+from .hash import Hash
 
 
 class RemoteArtifact(BaseModel):
@@ -13,8 +13,10 @@ class RemoteArtifact(BaseModel):
     """
 
     url: str = Field(
+        default_factory=str,
         description="The URL of the remote artifact.",
     )
-    hash: Hash = Field(
+    hash: Hash | None = Field(
+        default=None,
         description="The hash of the remote artifact.",
     )
