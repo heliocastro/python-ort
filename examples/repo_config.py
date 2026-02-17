@@ -10,7 +10,7 @@ import yaml
 from pydantic import ValidationError
 from rich.pretty import pprint
 
-from ort import OrtRepositoryConfiguration
+from ort import RepositoryConfiguration
 
 logger = logging.getLogger()
 
@@ -21,7 +21,7 @@ def main(datafile: str) -> None:
     try:
         with Path(datafile).open() as fd:
             data = yaml.safe_load(fd)
-        parsed = OrtRepositoryConfiguration(**data)
+        parsed = RepositoryConfiguration(**data)
         pprint(parsed)
     except ValidationError as e:
         logger.error(e)

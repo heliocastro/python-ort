@@ -12,7 +12,7 @@ def test_details_from_string_capabilities():
     """Test that AdvisorDetails converts string capabilities to enum values."""
     details = AdvisorDetails(
         name="VulnerableCode",
-        capabilities=["VULNERABILITIES"],
+        capabilities={AdvisorCapability.VULNERABILITIES},
     )
     if details.name != "VulnerableCode":
         pytest.fail(f"Expected name 'VulnerableCode', got '{details.name}'")
@@ -24,7 +24,7 @@ def test_details_from_multiple_string_capabilities():
     """Test that AdvisorDetails converts multiple string capabilities."""
     details = AdvisorDetails(
         name="OSV",
-        capabilities=["DEFECTS", "VULNERABILITIES"],
+        capabilities={AdvisorCapability.DEFECTS, AdvisorCapability.VULNERABILITIES},
     )
     if details.capabilities != {AdvisorCapability.DEFECTS, AdvisorCapability.VULNERABILITIES}:
         pytest.fail(f"Expected {{DEFECTS, VULNERABILITIES}}, got {details.capabilities}")
@@ -34,7 +34,7 @@ def test_details_from_int_capabilities():
     """Test that AdvisorDetails accepts integer capability values."""
     details = AdvisorDetails(
         name="TestAdvisor",
-        capabilities=[1, 2],
+        capabilities=[1, 2],  # ty: ignore[invalid-argument-type]
     )
     if details.capabilities != {AdvisorCapability.DEFECTS, AdvisorCapability.VULNERABILITIES}:
         pytest.fail(f"Expected {{DEFECTS, VULNERABILITIES}}, got {details.capabilities}")
@@ -44,7 +44,7 @@ def test_details_from_mixed_capabilities():
     """Test that AdvisorDetails handles a mix of string and int capabilities."""
     details = AdvisorDetails(
         name="TestAdvisor",
-        capabilities=["DEFECTS", 2],
+        capabilities=["DEFECTS", 2],  # ty: ignore[invalid-argument-type]
     )
     if details.capabilities != {AdvisorCapability.DEFECTS, AdvisorCapability.VULNERABILITIES}:
         pytest.fail(f"Expected {{DEFECTS, VULNERABILITIES}}, got {details.capabilities}")
@@ -55,7 +55,7 @@ def test_details_invalid_capability_string():
     with pytest.raises(ValidationError):
         AdvisorDetails(
             name="TestAdvisor",
-            capabilities=["INVALID"],
+            capabilities=["INVALID"],  # ty: ignore[invalid-argument-type]
         )
 
 
@@ -64,18 +64,18 @@ def test_details_extra_field_forbidden():
     with pytest.raises(ValidationError):
         AdvisorDetails(
             name="TestAdvisor",
-            capabilities=["VULNERABILITIES"],
-            unknown_field="value",
+            capabilities={AdvisorCapability.VULNERABILITIES},
+            unknown_field="value",  # ty: ignore[unknown-argument]
         )
 
 
 def test_details_missing_name():
     """Test that missing 'name' field raises a ValidationError."""
     with pytest.raises(ValidationError):
-        AdvisorDetails(capabilities=["VULNERABILITIES"])
+        AdvisorDetails(capabilities={AdvisorCapability.VULNERABILITIES})  # ty: ignore[missing-argument]
 
 
 def test_details_missing_capabilities():
     """Test that missing 'capabilities' field raises a ValidationError."""
     with pytest.raises(ValidationError):
-        AdvisorDetails(name="TestAdvisor")
+        AdvisorDetails(name="TestAdvisor")  # ty: ignore[missing-argument]

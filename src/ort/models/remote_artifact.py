@@ -17,5 +17,6 @@ class RemoteArtifact(BaseModel):
         description="The URL of the remote artifact.",
     )
     hash: Hash | None = Field(
+        default=None,
         description="The hash of the remote artifact.",
     )

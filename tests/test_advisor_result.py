@@ -1,10 +1,13 @@
 # SPDX-FileCopyrightText: 2026 Helio Chissini de Castro <heliocastro@gmail.com>
 # SPDX-License-Identifier: MIT
 
+from datetime import datetime, timezone
+
 import pytest
 from pydantic import ValidationError
 
 from ort.models.advisor_capability import AdvisorCapability
+from ort.models.advisor_details import AdvisorDetails
 from ort.models.advisor_result import AdvisorResult
 from ort.models.advisor_summary import AdvisorSummary
 from tests.utils.load_yaml_config import load_yaml_config
@@ -69,14 +72,14 @@ def test_advisor_result_with_defects_from_yaml():
 def test_advisor_result_minimal():
     """Test creating a minimal AdvisorResult programmatically."""
     result = AdvisorResult(
-        advisor={
-            "name": "TestAdvisor",
-            "capabilities": ["VULNERABILITIES"],
-        },
-        summary={
-            "start_time": "2024-01-01T00:00:00Z",
-            "end_time": "2024-01-01T00:01:00Z",
-        },
+        advisor=AdvisorDetails(
+            name="TestAdvisor",
+            capabilities={AdvisorCapability.VULNERABILITIES},
+        ),
+        summary=AdvisorSummary(
+            start_time=datetime(2024, 1, 1, 0, 0, 0, tzinfo=timezone.utc),
+            end_time=datetime(2024, 1, 1, 0, 1, 0, tzinfo=timezone.utc),
+        ),
     )
     if result.advisor.name != "TestAdvisor":
         pytest.fail(f"Expected advisor name 'TestAdvisor', got '{result.advisor.name}'")
@@ -90,29 +93,29 @@ def test_advisor_result_missing_advisor():
     """Test that missing advisor field raises ValidationError."""
     with pytest.raises(ValidationError):
         AdvisorResult(
-            summary={
-                "start_time": "2024-01-01T00:00:00Z",
-                "end_time": "2024-01-01T00:01:00Z",
-            },
-        )
+            summary=AdvisorSummary(
+                start_time=datetime(2024, 1, 1, 0, 0, 0, tzinfo=timezone.utc),
+                end_time=datetime(2024, 1, 1, 0, 1, 0, tzinfo=timezone.utc),
+            ),
+        )  # ty: ignore[missing-argument]
 
 
 def test_advisor_result_missing_summary():
     """Test that missing summary field raises ValidationError."""
     with pytest.raises(ValidationError):
         AdvisorResult(
-            advisor={
-                "name": "TestAdvisor",
-                "capabilities": ["VULNERABILITIES"],
-            },
-        )
+            advisor=AdvisorDetails(
+                name="TestAdvisor",
+                capabilities={AdvisorCapability.VULNERABILITIES},
+            ),
+        )  #  ty: ignore[missing-argument]
 
 
 def test_advisor_summary_timestamps():
     """Test AdvisorSummary timestamp parsing."""
     summary = AdvisorSummary(
-        start_time="2024-06-01T10:00:00Z",
-        end_time="2024-06-01T10:05:00Z",
+        start_time=datetime(2024, 6, 1, 10, 0, 0, tzinfo=timezone.utc),
+        end_time=datetime(2024, 6, 1, 10, 5, 0, tzinfo=timezone.utc),
     )
     if summary.start_time.year != 2024:
         pytest.fail(f"Expected year 2024, got {summary.start_time.year}")
