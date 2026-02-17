@@ -10,7 +10,7 @@ import yaml
 DATA_CONFIG_DIR = Path(__file__).parent.parent / "data"
 
 
-def load_yaml_config(filename: str, data_dir: Path | None = None) -> Any:
+def load_yaml_config(filename: str, data_dir: Path | str | None = None) -> Any:
     """
     Load a YAML configuration file from the REPO_CONFIG_DIR directory.
 

@@ -10,7 +10,7 @@ from ort.models.repository_configuration import (
     OrtRepositoryConfigurationIncludesPath,
     PathIncludeReason,
 )
-from tests.utils.load_yaml_config import load_yaml_config  # type: ignore
+from tests.utils.load_yaml_config import load_yaml_config
 
 
 def test_only_include_valid():
@@ -50,7 +50,10 @@ def test_only_include_valid():
     if not repo_config.includes or not getattr(repo_config.includes, "paths", None):
         pytest.fail("No path includes are provided.")
     else:
-        path_obj = repo_config.includes.paths[0]
+        paths = getattr(repo_config.includes, "paths", None)
+        if not paths or not isinstance(paths, list):
+            pytest.fail("No path includes are provided or 'paths' is not a list.")
+        path_obj = paths[0]
         if path_obj.pattern != "test/**":
             pytest.fail(f"Pattern mismatch: {path_obj.pattern}")
         if path_obj.reason != PathIncludeReason.source_of:
