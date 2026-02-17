@@ -5,7 +5,7 @@ from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from ort.models.analyzer_result import AnalyzerResult
+from ort.models import AnalyzerResult
 from ort.models.config.analyzer_configuration import AnalyzerConfiguration
 from ort.utils.environment import Environment
 

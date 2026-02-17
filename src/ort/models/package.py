@@ -4,11 +4,12 @@
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from ort.models.identifier import Identifier
-from ort.models.remote_artifact import RemoteArtifact
-from ort.models.source_code_origin import SourceCodeOrigin
-from ort.models.vcsinfo import VcsInfo
 from ort.utils.processed_declared_license import ProcessedDeclaredLicense
+
+from .identifier import Identifier
+from .remote_artifact import RemoteArtifact
+from .source_code_origin import SourceCodeOrigin
+from .vcsinfo import VcsInfo
 
 
 class Package(BaseModel):

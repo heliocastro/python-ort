@@ -4,8 +4,8 @@
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from ort.models.repository_configuration import RepositoryConfiguration
-from ort.models.vcsinfo import VcsInfo
+from .repository_configuration import RepositoryConfiguration
+from .vcsinfo import VcsInfo
 
 
 class Repository(BaseModel):

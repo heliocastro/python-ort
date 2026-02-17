@@ -5,7 +5,7 @@ from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from ort.models.issue import Issue
+from .issue import Issue
 
 
 class AdvisorSummary(BaseModel):

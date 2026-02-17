@@ -4,7 +4,7 @@
 
 from pydantic import BaseModel, Field
 
-from ort.models.hash import Hash
+from .hash import Hash
 
 
 class RemoteArtifact(BaseModel):

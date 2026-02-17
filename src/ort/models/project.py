@@ -4,10 +4,11 @@
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from ort.models.identifier import Identifier
-from ort.models.scope import Scope
-from ort.models.vcsinfo import VcsInfo
 from ort.utils.processed_declared_license import ProcessedDeclaredLicense
+
+from .identifier import Identifier
+from .scope import Scope
+from .vcsinfo import VcsInfo
 
 
 class Project(BaseModel):

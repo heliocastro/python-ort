@@ -5,10 +5,11 @@ from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from ort.models.advisor_result import AdvisorResult
+from ort.models import AdvisorResult
 from ort.models.config.advisor_configuration import AdvisorConfiguration
-from ort.models.identifier import Identifier
 from ort.utils.environment import Environment
+
+from .identifier import Identifier
 
 
 class AdvisorRun(BaseModel):

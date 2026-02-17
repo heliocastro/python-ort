@@ -4,9 +4,9 @@
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from ort.models.advisor_run import AdvisorRun
-from ort.models.analyzer_run import AnalyzerRun
-from ort.models.repository import Repository
+from .advisor_run import AdvisorRun
+from .analyzer_run import AnalyzerRun
+from .repository import Repository
 
 
 class OrtResult(BaseModel):

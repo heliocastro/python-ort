@@ -4,7 +4,7 @@
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
-from ort.models.advisor_capability import AdvisorCapability
+from ort.models import AdvisorCapability
 
 
 class AdvisorDetails(BaseModel):

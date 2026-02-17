@@ -3,10 +3,11 @@
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from ort.models.advisor_details import AdvisorDetails
-from ort.models.advisor_summary import AdvisorSummary
-from ort.models.defect import Defect
 from ort.models.vulnerabilities import Vulnerability
+
+from .advisor_details import AdvisorDetails
+from .advisor_summary import AdvisorSummary
+from .defect import Defect
 
 
 class AdvisorResult(BaseModel):
