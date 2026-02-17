@@ -4,10 +4,10 @@
 
 from ort.models.analyzer_result import AnalyzerResult
 from ort.models.ort_result import OrtResult
-from ort.models.repository_configuration import OrtRepositoryConfiguration
+from ort.models.repository_configuration import RepositoryConfiguration
 
 __all__ = [
     "AnalyzerResult",
-    "OrtRepositoryConfiguration",
+    "RepositoryConfiguration",
     "OrtResult",
 ]

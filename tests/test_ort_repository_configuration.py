@@ -5,10 +5,10 @@
 import pytest
 
 from ort.models.repository_configuration import (
-    OrtRepositoryConfiguration,
     OrtRepositoryConfigurationIncludes,
     OrtRepositoryConfigurationIncludesPath,
     PathIncludeReason,
+    RepositoryConfiguration,
 )
 from tests.utils.load_yaml_config import load_yaml_config
 
@@ -43,7 +43,7 @@ def test_only_include_valid():
                 )
             ]
         )
-        repo_config = OrtRepositoryConfiguration(includes=includes_model)
+        repo_config = RepositoryConfiguration(includes=includes_model)
     except Exception as e:
         pytest.fail(f"Failed to instantiate OrtRepositoryConfiguration: {e}")
 
