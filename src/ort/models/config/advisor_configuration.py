@@ -2,6 +2,8 @@
 # SPDX-License-Identifier: MIT
 
 
+from typing import Any
+
 from pydantic import BaseModel, ConfigDict, Field
 
 
@@ -19,7 +21,7 @@ class AdvisorConfiguration(BaseModel):
         default=False,
         description="A flag to control whether excluded scopes and paths should be skipped when giving the advice.",
     )
-    advisors: dict[str, str] | None = Field(
+    advisors: dict[str, Any] | None = Field(
         default=None,
         description="A map with [configuration][PluginConfig] for advice providers using the"
         "[plugin id][PluginDescriptor.id] as key.",
