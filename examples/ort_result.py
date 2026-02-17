@@ -17,12 +17,23 @@ logger = logging.getLogger()
 
 @click.command()
 @click.argument("datafile")
-def main(datafile: str) -> None:
+@click.option("-a", "--analyzer", is_flag=True)
+@click.option("-v", "--advisor", is_flag=True)
+def main(
+    datafile: str,
+    analyzer: bool,
+    advisor: bool,
+) -> None:
     try:
         with Path(datafile).open() as fd:
             data = yaml.safe_load(fd)
         parsed = OrtResult(**data)
-        pprint(parsed)
+        if analyzer:
+            pprint(parsed.analyzer)
+        if advisor:
+            pprint(parsed.advisor)
+        else:
+            pprint(parsed)
     except ValidationError as e:
         logger.error(e)
         sys.exit(1)
