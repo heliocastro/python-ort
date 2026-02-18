@@ -2,7 +2,9 @@
 # SPDX-License-Identifier: MIT
 
 from .vulnerability import Vulnerability
+from .vulnerability_reference import VulnerabilityReference
 
 __all__ = [
     "Vulnerability",
+    "VulnerabilityReference",
 ]
