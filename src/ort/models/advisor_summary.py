@@ -3,7 +3,7 @@
 
 from datetime import datetime
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field
 
 from .issue import Issue
 
@@ -29,10 +29,3 @@ class AdvisorSummary(BaseModel):
         description="The list of issues that occurred during the advisor run."
         "This property is not serialized if the list is empty to reduce the size of the result file.",
     )
-
-    @field_validator("start_time", "end_time", mode="before")
-    @classmethod
-    def transform_date(cls, v):
-        if isinstance(v, str):
-            return datetime.fromisoformat(v.replace("Z", "+00:00"))
-        return v
