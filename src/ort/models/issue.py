@@ -7,6 +7,7 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from ort.severity import Severity
+from ort.utils import convert_enum
 
 
 class Issue(BaseModel):
@@ -38,16 +39,4 @@ class Issue(BaseModel):
     @field_validator("severity", mode="before")
     @classmethod
     def convert_severity(cls, v):
-        def _convert(item):
-            if isinstance(item, str):
-                try:
-                    return Severity[item]
-                except KeyError:
-                    raise ValueError(f"Invalid severity: {item}")
-            return item
-
-        if isinstance(v, (list, set)):
-            return {_convert(item) for item in v}
-        if isinstance(v, str):
-            return _convert(v)
-        return v
+        return convert_enum(Severity, v)

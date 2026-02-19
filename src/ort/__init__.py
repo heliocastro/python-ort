@@ -2,9 +2,9 @@
 #
 # SPDX-License-Identifier: MIT
 
-from ort.models.analyzer_result import AnalyzerResult
-from ort.models.ort_result import OrtResult
-from ort.models.repository_configuration import RepositoryConfiguration
+from .models.analyzer_result import AnalyzerResult
+from .models.config.repository_configuration import RepositoryConfiguration
+from .models.ort_result import OrtResult
 
 __all__ = [
     "AnalyzerResult",
