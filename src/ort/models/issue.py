@@ -4,7 +4,7 @@
 
 from datetime import datetime
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from ort.severity import Severity
 
@@ -34,3 +34,20 @@ class Issue(BaseModel):
         default=None,
         description="The affected file or directory the issue is limited to, if any.",
     )
+
+    @field_validator("severity", mode="before")
+    @classmethod
+    def convert_severity(cls, v):
+        def _convert(item):
+            if isinstance(item, str):
+                try:
+                    return Severity[item]
+                except KeyError:
+                    raise ValueError(f"Invalid severity: {item}")
+            return item
+
+        if isinstance(v, (list, set)):
+            return {_convert(item) for item in v}
+        if isinstance(v, str):
+            return _convert(v)
+        return v

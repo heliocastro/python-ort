@@ -1,10 +1,10 @@
 # SPDX-FileCopyrightText: 2025 Helio Chissini de Castro <heliocastro@gmail.com>
 # SPDX-License-Identifier: MIT
 
-from enum import Enum, auto
+from enum import IntEnum
 
 
-class Severity(Enum):
+class Severity(IntEnum):
     """
     A generic class describing a severity, e.g. of issues, sorted from least severe to most severe.
 
@@ -14,6 +14,6 @@ class Severity(Enum):
         ERROR: An error is something that has to be addressed.
     """
 
-    HINT = auto()
-    WARNING = auto()
-    ERROR = auto()
+    HINT = 1
+    WARNING = 2
+    ERROR = 3
