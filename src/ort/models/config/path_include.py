@@ -6,10 +6,10 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from ort.utils import convert_enum
 
-from .path_exclude_reason import PathExcludeReason
+from .path_include_reason import PathIncludeReason
 
 
-class PathExclude(BaseModel):
+class PathInclude(BaseModel):
     """
     Defines paths which should be excluded. Each file or directory that is matched by the [glob][pattern] is marked as
     excluded. If a project definition file is matched by the [pattern], the whole project is excluded. For details about
@@ -24,8 +24,8 @@ class PathExclude(BaseModel):
         description="A glob to match the path of the project definition file, relative to the root of the repository."
     )
 
-    reason: PathExcludeReason = Field(
-        description="The reason why the project is excluded, out of a predefined choice.",
+    reason: PathIncludeReason = Field(
+        description="The reason why the project is included, out of a predefined choice.",
     )
 
     comment: str = Field(
@@ -36,4 +36,4 @@ class PathExclude(BaseModel):
     @field_validator("reason", mode="before")
     @classmethod
     def validate_reason(cls, value):
-        return convert_enum(PathExcludeReason, value)
+        return convert_enum(PathIncludeReason, value)

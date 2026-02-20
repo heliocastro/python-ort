@@ -6,6 +6,13 @@ from .advisor_result import AdvisorResult
 from .advisor_run import AdvisorRun
 from .analyzer_result import AnalyzerResult
 from .analyzer_run import AnalyzerRun
+from .config.excludes import Excludes
+from .config.includes import Includes
+from .config.path_exclude import PathExclude
+from .config.path_exclude_reason import PathExcludeReason
+from .config.path_include import PathInclude
+from .config.path_include_reason import PathIncludeReason
+from .config.repository_configuration import RepositoryConfiguration
 from .dependency_graph import DependencyGraph
 from .dependency_graph_edge import DependencyGraphEdge
 from .dependency_graph_node import DependencyGraphNode
@@ -23,7 +30,6 @@ from .package_reference import PackageReference
 from .project import Project
 from .remote_artifact import RemoteArtifact
 from .repository import Repository
-from .repository_configuration import RepositoryConfiguration
 from .root_dependency_index import RootDependencyIndex
 from .scope import Scope
 from .source_code_origin import SourceCodeOrigin
@@ -44,6 +50,8 @@ __all__ = [
     "Hash",
     "HashAlgorithm",
     "Identifier",
+    "Includes",
+    "Excludes",
     "Issue",
     "OrtResult",
     "Package",
@@ -51,6 +59,10 @@ __all__ = [
     "PackageCurationData",
     "PackageLinkage",
     "PackageReference",
+    "PathExcludeReason",
+    "PathIncludeReason",
+    "PathExclude",
+    "PathInclude",
     "Project",
     "RemoteArtifact",
     "Repository",

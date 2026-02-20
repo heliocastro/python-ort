@@ -4,7 +4,7 @@
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from .repository_configuration import RepositoryConfiguration
+from .config.repository_configuration import RepositoryConfiguration
 from .vcsinfo import VcsInfo
 
 

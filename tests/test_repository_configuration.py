@@ -4,12 +4,8 @@
 
 import pytest
 
-from ort.models.repository_configuration import (
-    OrtRepositoryConfigurationIncludes,
-    OrtRepositoryConfigurationIncludesPath,
-    PathIncludeReason,
-    RepositoryConfiguration,
-)
+from ort.models import Includes, PathInclude, PathIncludeReason
+from ort.models.config.repository_configuration import RepositoryConfiguration
 from tests.utils.load_yaml_config import load_yaml_config
 
 
@@ -36,16 +32,16 @@ def test_only_include_valid():
 
     # Instantiate the model and check values
     try:
-        includes_model = OrtRepositoryConfigurationIncludes(
+        includes_model = Includes(
             paths=[
-                OrtRepositoryConfigurationIncludesPath(
-                    pattern=path_cfg["pattern"], reason=PathIncludeReason.source_of, comment=path_cfg["comment"]
+                PathInclude(
+                    pattern=path_cfg["pattern"], reason=PathIncludeReason.SOURCE_OF, comment=path_cfg["comment"]
                 )
             ]
         )
         repo_config = RepositoryConfiguration(includes=includes_model)
     except Exception as e:
-        pytest.fail(f"Failed to instantiate OrtRepositoryConfiguration: {e}")
+        pytest.fail(f"Failed to instantiate RepositoryConfiguration: {e}")
 
     if not repo_config.includes or not getattr(repo_config.includes, "paths", None):
         pytest.fail("No path includes are provided.")
@@ -56,7 +52,7 @@ def test_only_include_valid():
         path_obj = paths[0]
         if path_obj.pattern != "test/**":
             pytest.fail(f"Pattern mismatch: {path_obj.pattern}")
-        if path_obj.reason != PathIncludeReason.source_of:
+        if path_obj.reason != PathIncludeReason.SOURCE_OF:
             pytest.fail(f"Reason mismatch: {path_obj.reason}")
         if path_obj.comment != "Included for test":
             pytest.fail(f"Comment mismatch: {path_obj.comment}")
@@ -65,7 +61,7 @@ def test_only_include_valid():
 def test_only_include_reason_fail():
     """
     Test that providing an invalid 'reason' value in the path configuration
-    raises a ValueError when instantiating OrtRepositoryConfigurationIncludesPath.
+    raises a ValueError when instantiating RepositoryConfigurationIncludesPath.
     The test expects failure when 'reason' is not a valid PathIncludeReason enum.
     """
     config_data = load_yaml_config("only_include_reason_fail.yml", "repo_config")
@@ -82,9 +78,9 @@ def test_only_include_reason_fail():
 
     # Try to instantiate the model and expect failure if "BINARY_OF" is not a valid enum
     with pytest.raises(ValueError):
-        OrtRepositoryConfigurationIncludes(
+        Includes(
             paths=[
-                OrtRepositoryConfigurationIncludesPath(
+                PathInclude(
                     pattern=path_cfg["pattern"],
                     reason=path_cfg["reason"],  # This should fail, not a valid PathIncludeReason
                     comment=path_cfg["comment"],
