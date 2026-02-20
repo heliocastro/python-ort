@@ -3,6 +3,7 @@
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from ....types.purl_type import PurlType
 from ...text_location import TextLocation
 from .snippet_choice_reason import SnippetChoiceReason
 
@@ -29,7 +30,7 @@ class Choice(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    purl: str = Field(
+    purl: PurlType = Field(
         ...,
         description="The purl of the snippet chosen by this snippet choice."
         "If [reason] is [SnippetChoiceReason.NO_RELEVANT_FINDING], it is null.",
@@ -52,5 +53,11 @@ class SnippetChoice(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    given: Given = Field(..., description="The source file criteria for which the snippet choice is made.")
-    choice: Choice = Field(..., description="The snippet criteria to make the snippet choice.")
+    given: Given = Field(
+        ...,
+        description="The source file criteria for which the snippet choice is made.",
+    )
+    choice: Choice = Field(
+        ...,
+        description="The snippet criteria to make the snippet choice.",
+    )
