@@ -27,9 +27,15 @@ class OrtResult(BaseModel):
     repository: Repository = Field(
         description="Information about the repository that was used as input.",
     )
-    analyzer: AnalyzerRun = Field(
+    analyzer: AnalyzerRun | None = Field(
+        default=None,
         description="An [AnalyzerRun] containing details about the analyzer that was run using [repository]"
-        "as input. Can be null if the [repository] was not yet analyzed."
+        "as input. Can be null if the [repository] was not yet analyzed.",
+    )
+    scanner: ScannerRun | None = Field(
+        default=None,
+        description="An [AdvisorRun] containing details about the advisor that was run using the result"
+        "from [analyzer] as input. Can be null if no advisor was run.",
     )
     advisor: AdvisorRun | None = Field(
         default=None,
