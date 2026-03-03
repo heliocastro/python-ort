@@ -59,8 +59,9 @@ class Project(BaseModel):
         description="The description of project.",
     )
     homepage_url: str = Field(..., description="The URL to the project's homepage.")
-    scope_dependencies: set[Scope] | None = Field(
-        None,
+    scope_dependencies: set[Scope] = Field(
+        default_factory=set,
+        alias="scopes",
         description="Holds information about the scopes and their dependencies of this project if no DependencyGraph"
         "is available. NOTE: Do not use this property to access scope information. Use scopes instead, which is"
         "correctly initialized in all cases.",
