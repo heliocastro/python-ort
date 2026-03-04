@@ -1534,6 +1534,7 @@ analyzer:
         url: "https://github.com/pypa/virtualenv.git"
         revision: ""
         path: ""
+      scopes: []
     dependency_graphs:
       PIP:
         packages:
