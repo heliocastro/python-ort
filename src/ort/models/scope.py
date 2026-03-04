@@ -28,3 +28,11 @@ class Scope(BaseModel):
         "testing the product. But transitive dependencies would not be test dependencies of the test "
         "dependencies, but compile dependencies of test dependencies.",
     )
+
+    def __hash__(self) -> int:
+        return hash(self.name)
+
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, Scope):
+            return NotImplemented
+        return self.name == other.name
