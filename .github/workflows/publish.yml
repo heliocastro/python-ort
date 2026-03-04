@@ -5,16 +5,18 @@
 name: Publish
 
 on:
-  push:
-    tags:
-      - 'v*'
-    paths-ignore:
-      - '**.md'
+  workflow_run:
+    workflows:
+      - Build
+      - Validation
+    types:
+      - completed
 
 jobs:
   publish:
     name: Publish Python Ort on PyPI
     runs-on: ubuntu-24.04
+    if: github.event.workflow_run.conclusion == 'success' && startsWith(github.event.workflow_run.head_branch, 'v')
     environment:
       name: PyPI
     permissions:

@@ -2,7 +2,9 @@
 # SPDX-License-Identifier: MIT
 
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
+
+from ort.utils import convert_enum
 
 from .issue_resolution_reason import IssueResolutionReason
 
@@ -30,3 +32,8 @@ class IssueResolution(BaseModel):
     comment: str = Field(
         description="A comment to further explain why the [reason] is applicable here.",
     )
+
+    @field_validator("reason", mode="before")
+    @classmethod
+    def validate_reason(cls, value):
+        return convert_enum(IssueResolutionReason, value)
