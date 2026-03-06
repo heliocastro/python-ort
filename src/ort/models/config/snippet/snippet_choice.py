@@ -1,7 +1,9 @@
 # SPDX-FileCopyrightText: 2026 Helio Chissini de Castro <heliocastro@gmail.com>
 # SPDX-License-Identifier: MIT
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
+
+from ort.utils import convert_enum
 
 from ....types.purl_type import PurlType
 from ...text_location import TextLocation
@@ -44,6 +46,11 @@ class Choice(BaseModel):
         description="An optional comment describing the snippet choice.",
     )
 
+    @field_validator("reason", mode="before")
+    @classmethod
+    def validate_reason(cls, value):
+        return convert_enum(SnippetChoiceReason, value)
+
 
 class SnippetChoice(BaseModel):
     """
@@ -61,3 +68,12 @@ class SnippetChoice(BaseModel):
         ...,
         description="The snippet criteria to make the snippet choice.",
     )
+
+    # @model_validator(mode="before")
+    # @classmethod
+    # def validate_snippet_choice(cls, v):
+    #     print(v)
+    #     breakpoint()
+    #     if not isinstance(v, dict):
+    #         raise ValueError("SnippetChoice must be a dictionary.")
+    #     return v

@@ -11,7 +11,7 @@ from .license_choice import LicenseChoice
 from .package_configuration import PackageConfiguration
 from .repository_analyzer_configuration import RepositoryAnalyzerConfiguration
 from .resolutions import Resolutions
-from .snippet.snippet_choice import SnippetChoice
+from .snippet_choices import SnippetChoices
 
 
 class RepositoryConfiguration(BaseModel):
@@ -60,7 +60,7 @@ class RepositoryConfiguration(BaseModel):
         None,
         description="A configuration to select a license from a multi-licensed package.",
     )
-    snippet_choices: list[SnippetChoice] = Field(
+    snippet_choices: list[SnippetChoices] = Field(
         default_factory=list,
         description="A configuration to select a snippet from a package with multiple snippet findings.",
     )
