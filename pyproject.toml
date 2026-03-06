@@ -4,7 +4,7 @@ build-backend = "uv_build"
 
 [project]
 name = "python-ort"
-version = "0.6.5"
+version = "0.6.6"
 description = "A Python Ort model serialization library"
 readme = "README.md"
 license = "MIT"
@@ -159,9 +159,3 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 quote-style = "double"
 indent-style = "space"
 skip-magic-trailing-comma = false
-
-[tool.pyrefly]
-project_includes = [
-    "src/ort/**",
-    "tests/**",
-]

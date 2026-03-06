@@ -11,7 +11,7 @@ wheels/
 .python-version
 
 # Old python requirements
-requirements.txt
+requirements.txtq
 
 # Ort directories
 output

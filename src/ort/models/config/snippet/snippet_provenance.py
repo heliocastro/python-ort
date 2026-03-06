@@ -1,9 +1,10 @@
 # SPDX-FileCopyrightText: 2026 Helio Chissini de Castro <heliocastro@gmail.com>
 # SPDX-License-Identifier: MIT
+#
 from pydantic import AnyUrl, BaseModel, ConfigDict, Field
 
 
-class Provenance(BaseModel):
+class SnippetProvenance(BaseModel):
     """
     The URL of the [RepositoryProvenance] the snippet choice applies to.
     """
