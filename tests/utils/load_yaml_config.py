@@ -5,7 +5,8 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-import yaml
+
+from ort.utils.yaml_loader import ort_yaml_load
 
 DATA_CONFIG_DIR = Path(__file__).parent.parent / "data"
 
@@ -27,6 +28,6 @@ def load_yaml_config(filename: str, data_dir: Path | str | None = None) -> Any:
 
     try:
         with (data_dir_resolved / filename).open() as f:
-            return yaml.safe_load(f)
+            return ort_yaml_load(f)
     except OSError:
         pytest.fail("Fail to load test assets.")

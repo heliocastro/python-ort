@@ -1,10 +1,10 @@
 # SPDX-FileCopyrightText: 2025 Helio Chissini de Castro <heliocastro@gmail.com>
 # SPDX-License-Identifier: MIT
 
-from enum import IntEnum
+from ort.utils.validated_enum import ValidatedIntEnum
 
 
-class Severity(IntEnum):
+class Severity(ValidatedIntEnum):
     """
     A generic class describing a severity, e.g. of issues, sorted from least severe to most severe.
 

@@ -1,10 +1,10 @@
 # SPDX-FileCopyrightText: 2025 Helio Chissini de Castro <heliocastro@gmail.com>
 # SPDX-License-Identifier: MIT
 
-from enum import IntEnum
+from ort.utils.validated_enum import ValidatedIntEnum
 
 
-class PathExcludeReason(IntEnum):
+class PathExcludeReason(ValidatedIntEnum):
     """
     Possible reasons for excluding a path.
 

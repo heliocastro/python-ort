@@ -1,10 +1,10 @@
 # SPDX-FileCopyrightText: 2025 Helio Chissini de Castro <heliocastro@gmail.com>
 # SPDX-License-Identifier: MIT
 
-from enum import IntEnum
+from ort.utils.validated_enum import ValidatedIntEnum
 
 
-class IssueResolutionReason(IntEnum):
+class IssueResolutionReason(ValidatedIntEnum):
     """
     Possible reasons for resolving an Issue using an IssueResolution.
 

@@ -2,10 +2,9 @@
 # SPDX-License-Identifier: MIT
 
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field
 
 from ort.models.config.scope_exclude_reason import ScopeExcludeReason
-from ort.utils import convert_enum
 
 
 class ScopeExclude(BaseModel):
@@ -29,8 +28,3 @@ class ScopeExclude(BaseModel):
         default_factory=str,
         description="A comment to further explain why the [reason] is applicable here.",
     )
-
-    @field_validator("reason", mode="before")
-    @classmethod
-    def validate_reason(cls, value):
-        return convert_enum(ScopeExcludeReason, value)

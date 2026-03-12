@@ -6,11 +6,10 @@ import sys
 from pathlib import Path
 
 import click
-import yaml
 from pydantic import ValidationError
 from rich.pretty import pprint
 
-from ort import OrtResult
+from ort import OrtResult, ort_yaml_load
 
 logger = logging.getLogger()
 
@@ -26,7 +25,7 @@ def main(
 ) -> None:
     try:
         with Path(datafile).open() as fd:
-            data = yaml.safe_load(fd)
+            data = ort_yaml_load(fd)
         parsed = OrtResult(**data)
         if analyzer:
             pprint(parsed.analyzer)

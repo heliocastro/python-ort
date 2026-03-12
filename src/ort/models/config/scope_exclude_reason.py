@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MIT
 
 
-from enum import IntEnum
+from ort.utils.validated_enum import ValidatedIntEnum
 
 
-class ScopeExcludeReason(IntEnum):
+class ScopeExcludeReason(ValidatedIntEnum):
     """
     Possible reasons for excluding a scope.
 
