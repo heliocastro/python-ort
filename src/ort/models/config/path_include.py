@@ -2,9 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
-
-from ort.utils import convert_enum
+from pydantic import BaseModel, ConfigDict, Field
 
 from .path_include_reason import PathIncludeReason
 
@@ -32,8 +30,3 @@ class PathInclude(BaseModel):
         default_factory=str,
         description="A comment to further explain why the [reason] is applicable here.",
     )
-
-    @field_validator("reason", mode="before")
-    @classmethod
-    def validate_reason(cls, value):
-        return convert_enum(PathIncludeReason, value)

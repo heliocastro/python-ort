@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MIT
 
 
-from enum import IntEnum
+from ort.utils.validated_enum import ValidatedIntEnum
 
 
-class AdvisorCapability(IntEnum):
+class AdvisorCapability(ValidatedIntEnum):
     """
     An enum class that defines the capabilities of a specific advisor implementation.
 

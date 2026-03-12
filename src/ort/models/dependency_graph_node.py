@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field
 
 from .issue import Issue
 from .package_linkage import PackageLinkage
@@ -42,13 +42,3 @@ class DependencyGraphNode(BaseModel):
     issues: list[Issue] = Field(
         default_factory=list, description="A list of Issue objects that occurred handling this dependency."
     )
-
-    @field_validator("linkage", mode="before")
-    @classmethod
-    def convert_linkage(cls, v):
-        if isinstance(v, str):
-            try:
-                return PackageLinkage[v]
-            except KeyError:
-                raise ValueError(f"Invalid linkage: {v}")
-        return v

@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: MIT
 
 
-from enum import IntEnum
+from ort.utils.validated_enum import ValidatedIntEnum
 
 
-class PackageLinkage(IntEnum):
+class PackageLinkage(ValidatedIntEnum):
     """
     A class to denote the linkage type between two packages.
 

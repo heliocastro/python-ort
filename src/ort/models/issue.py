@@ -4,10 +4,9 @@
 
 from datetime import datetime
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field
 
 from ort.severity import Severity
-from ort.utils import convert_enum
 
 
 class Issue(BaseModel):
@@ -35,8 +34,3 @@ class Issue(BaseModel):
         default=None,
         description="The affected file or directory the issue is limited to, if any.",
     )
-
-    @field_validator("severity", mode="before")
-    @classmethod
-    def convert_severity(cls, v):
-        return convert_enum(Severity, v)

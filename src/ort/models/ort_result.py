@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2025 Helio Chissini de Castro <heliocastro@gmail.com>
+# SPDX-FileCopyrightText: 2025 Helio Chissini de Castro <dev@heliocastro.info
 # SPDX-License-Identifier: MIT
 
 
@@ -6,6 +6,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from .advisor_run import AdvisorRun
 from .analyzer_run import AnalyzerRun
+from .evaluator_run import EvaluatorRun
 from .repository import Repository
 
 
@@ -35,6 +36,11 @@ class OrtResult(BaseModel):
         default=None,
         description="An [AdvisorRun] containing details about the advisor that was run using the result from"
         "[analyzer] as input. Can be null if no advisor was run.",
+    )
+    evaluator: EvaluatorRun | None = Field(
+        default=None,
+        description="A [ResolvedConfiguration] containing data resolved during the analysis which augments the"
+        "automatically determined data.",
     )
     labels: dict[str, str] = Field(
         default_factory=dict,

@@ -1,10 +1,10 @@
 # SPDX-FileCopyrightText: 2026 Helio Chissini de Castro <heliocastro@gmail.com>
 # SPDX-License-Identifier: MIT
 
-from enum import IntEnum
+from ort.utils.validated_enum import ValidatedIntEnum
 
 
-class PathIncludeReason(IntEnum):
+class PathIncludeReason(ValidatedIntEnum):
     """
     Possible reasons for including a path.
 
