@@ -11,7 +11,7 @@ from .license_choice import LicenseChoice
 from .package_configuration import PackageConfiguration
 from .repository_analyzer_configuration import RepositoryAnalyzerConfiguration
 from .resolutions import Resolutions
-from .snippet_choices import SnippetChoices
+from .snippet.snippet_choices import SnippetChoices
 
 
 class RepositoryConfiguration(BaseModel):

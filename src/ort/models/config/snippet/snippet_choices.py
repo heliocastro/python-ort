@@ -3,8 +3,8 @@
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from .snippet.snippet_choice import SnippetChoice
-from .snippet.snippet_provenance import SnippetProvenance
+from .snippet_choice import SnippetChoice
+from .snippet_provenance import SnippetProvenance
 
 
 class SnippetChoices(BaseModel):
