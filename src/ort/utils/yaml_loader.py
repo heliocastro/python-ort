@@ -5,14 +5,10 @@ from typing import Any
 
 import yaml
 
-# Prefer the C-accelerated SafeLoader when available (5-10x faster).
-try:
-    _BaseLoader = yaml.CSafeLoader
-except AttributeError:
-    _BaseLoader = yaml.SafeLoader
+_BaseLoader = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
 
 
-class OrtYamlLoader(_BaseLoader):  # type: ignore[misc]
+class OrtYamlLoader(_BaseLoader):
     """A YAML loader that handles ORT-specific custom tags.
 
     ORT result files may contain custom YAML tags like

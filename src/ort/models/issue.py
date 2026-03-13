@@ -34,3 +34,11 @@ class Issue(BaseModel):
         default=None,
         description="The affected file or directory the issue is limited to, if any.",
     )
+
+    def __hash__(self) -> int:
+        return hash(self.affected_path)
+
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, Issue):
+            return NotImplemented
+        return self.affected_path == other.affected_path

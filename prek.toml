@@ -22,7 +22,7 @@ hooks = [
 
 [[repos]]
 repo = "https://github.com/astral-sh/ruff-pre-commit"
-rev = "v0.15.4"
+rev = "v0.15.6"
 hooks = [
   {
     id = "ruff",
@@ -43,21 +43,21 @@ hooks = [
 
 [[repos]]
 repo = "https://github.com/astral-sh/uv-pre-commit"
-rev = "0.10.8"
+rev = "0.10.9"
 hooks = [
   { id = "uv-lock" }
 ]
 
 [[repos]]
 repo = "https://github.com/codespell-project/codespell"
-rev = "v2.4.1"
+rev = "v2.4.2"
 hooks = [
   { id = "codespell" }
 ]
 
 [[repos]]
 repo = "https://github.com/allganize/ty-pre-commit"
-rev = "v0.0.20"
+rev = "v0.0.22"
 hooks = [
   {
     id = "ty-check",
@@ -72,6 +72,7 @@ hooks = [
       "packageurl-python",
       "click",
       "rich",
+      "license-expression",
     ]
   }
 ]
