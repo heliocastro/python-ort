@@ -27,7 +27,7 @@ class VcsType(BaseModel):
 
     @model_validator(mode="before")
     @classmethod
-    def _forName(cls, value):
+    def for_name(cls, value):
         # Allow direct string input (e.g., "Git" or "gitlab")
         if isinstance(value, str):
             if any(item.lower() == value.lower() for item in KNOWN_TYPES):

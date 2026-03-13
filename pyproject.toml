@@ -4,13 +4,15 @@ build-backend = "uv_build"
 
 [project]
 name = "python-ort"
-version = "0.7.0"
+version = "0.8.0"
 description = "A Python Ort model serialization library"
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
 requires-python = ">=3.10"
 dependencies = [
+    "license>=0.1a3",
+    "license-expression>=30.4.4",
     "packageurl-python>=0.17.6",
     "pydantic>=2.12.5",
 ]
@@ -38,8 +40,8 @@ dev = [
     "datamodel-code-generator[http]>=0.55.0",
     "pytest>=9.0.2",
     "rich>=14.3.3",
-    "ruff>=0.15.5",
-    "ty>=0.0.21",
+    "ruff>=0.15.6",
+    "ty>=0.0.22",
     "types-pyyaml>=6.0.12.20250915",
 ]
 
@@ -144,9 +146,7 @@ extend-select = [
     "S",   # bandit
 ]
 ignore = [
-    'N802',   # function name should be lowercase
     'SIM105', # Suggest contextlib instead of try/except with pass
-    'A004',  # Python shadow builtins
 ]
 # Unlike Flake8, default to a complexity level of 10.
 mccabe.max-complexity = 10
