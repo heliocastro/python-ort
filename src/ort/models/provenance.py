@@ -7,7 +7,7 @@ from .remote_artifact import RemoteArtifact
 from .vcsinfo import VcsInfo
 
 
-class SnippetProvenance(BaseModel):
+class Provenance(BaseModel):
     """
     Provenance information about the origin of source code.
 
@@ -22,8 +22,8 @@ class SnippetProvenance(BaseModel):
     @model_validator(mode="before")
     @classmethod
     def validate_provenance(cls, v):
-        print(v)
-        breakpoint()
+        if not isinstance(v, Provenance):
+            return v
         if not isinstance(v, dict):
             raise ValueError("Provenance must be a dictionary.")
         if "source_artifact" in v:
@@ -34,20 +34,20 @@ class SnippetProvenance(BaseModel):
             return UnknownProvenance()
 
 
-class UnknownProvenance(BaseModel):
+class UnknownProvenance(Provenance):
     """
     Provenance information about the origin of source code.
     """
 
-    model_config = ConfigDict(extra="forbid")
+    pass
 
 
-class KnownProvenance(BaseModel):
+class KnownProvenance(Provenance):
     """
     Provenance information about the origin of source code.
     """
 
-    model_config = ConfigDict(extra="forbid")
+    pass
 
 
 class RemoteProvenance(KnownProvenance):
@@ -55,7 +55,7 @@ class RemoteProvenance(KnownProvenance):
     Provenance information about the origin of source code.
     """
 
-    model_config = ConfigDict(extra="forbid")
+    pass
 
 
 class ArtifactProvenance(RemoteProvenance):
@@ -63,19 +63,23 @@ class ArtifactProvenance(RemoteProvenance):
     Provenance information for a source artifact.
     """
 
-    model_config = ConfigDict(extra="forbid")
-
     source_artifact: RemoteArtifact = Field(
         description="The source artifact that was downloaded.",
     )
 
+    def __hash__(self) -> int:
+        return hash(self.source_artifact.url)
 
-class RepositoryProvenance(BaseModel):
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, ArtifactProvenance):
+            return NotImplemented
+        return self.source_artifact.url == other.source_artifact.url
+
+
+class RepositoryProvenance(RemoteProvenance):
     """
     Provenance information for a Version Control System location.
     """
-
-    model_config = ConfigDict(extra="forbid")
 
     vcs_info: VcsInfo = Field(
         description="VCS info used to resolve the revision. May still contain a moving revision like a branch.",
@@ -83,3 +87,11 @@ class RepositoryProvenance(BaseModel):
     resolved_revision: str = Field(
         description="Resolved fixed VCS revision, not blank and not moving (e.g. Git commit SHA1)."
     )
+
+    def __hash__(self) -> int:
+        return hash((self.vcs_info.url, self.resolved_revision))
+
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, RepositoryProvenance):
+            return NotImplemented
+        return self.vcs_info.url == other.vcs_info.url and self.resolved_revision == other.resolved_revision

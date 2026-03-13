@@ -1,4 +1,5 @@
-# SPDX-FileCopyrightText: 2025 Helio Chissini de Castro <heliocastro@gmail.com>
+# SPDX-FileCopyrightText: 2025 Helio Chissini de Castro <dev@heliocastro.info>
+# # SPDX-FileCopyrightText: 2026 CARIAD SE
 # SPDX-License-Identifier: MIT
 
 from datetime import datetime
