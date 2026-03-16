@@ -18,13 +18,13 @@ class PackageLicenseChoice(BaseModel):
         ...,
         description="Package ID",
     )
-    license_choice: list[SpdxLicenseChoice] = Field(
+    license_choices: list[SpdxLicenseChoice] = Field(
         default_factory=list,
         description="List of spdx license",
     )
 
 
-class LicenseChoice(BaseModel):
+class LicenseChoices(BaseModel):
     """
     [SpdxLicenseChoice]s that are applied to all packages in the repository. As the [SpdxLicenseChoice] is applied to
     each package that offers this license as a choice, [SpdxLicenseChoice.given] can not be null. This helps only

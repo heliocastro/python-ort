@@ -7,7 +7,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from .curations import Curations
 from .excludes import Excludes
 from .includes import Includes
-from .license_choice import LicenseChoice
+from .license_choices import LicenseChoices
 from .package_configuration import PackageConfiguration
 from .repository_analyzer_configuration import RepositoryAnalyzerConfiguration
 from .resolutions import Resolutions
@@ -56,7 +56,7 @@ class RepositoryConfiguration(BaseModel):
         default_factory=list,
         description="A configuration for a specific package and provenance.",
     )
-    license_choices: LicenseChoice | None = Field(
+    license_choices: LicenseChoices | None = Field(
         None,
         description="A configuration to select a license from a multi-licensed package.",
     )
