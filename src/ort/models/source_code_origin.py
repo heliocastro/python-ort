@@ -1,13 +1,13 @@
 # SPDX-FileCopyrightText: 2025 Helio Chissini de Castro <heliocastro@gmail.com>
 # SPDX-License-Identifier: MIT
 
-from enum import Enum
+from ..utils.validated_enum import ValidatedIntEnum
 
 
-class SourceCodeOrigin(Enum):
+class SourceCodeOrigin(ValidatedIntEnum):
     """
     An enumeration of supported source code origins.
     """
 
-    vcs = "VCS"
-    artifact = "ARTIFACT"
+    VCS = 1
+    ARTIFACT = 2

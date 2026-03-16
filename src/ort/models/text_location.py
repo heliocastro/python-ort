@@ -34,3 +34,11 @@ class TextLocation(BaseModel):
         if value < 0:
             raise ValueError("Line numbers must be greater than or equal to 0.")
         return value
+
+    def __hash__(self) -> int:
+        return hash((self.path, self.start_line, self.end_line))
+
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, TextLocation):
+            return NotImplemented
+        return self.path == other.path and self.start_line == other.start_line and self.end_line == other.end_line

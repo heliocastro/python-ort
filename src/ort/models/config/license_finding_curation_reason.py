@@ -3,10 +3,10 @@
 # SPDX-License-Identifier: MIT
 
 
-from enum import Enum
+from ...utils.validated_enum import ValidatedIntEnum
 
 
-class LicenseFindingCurationReason(Enum):
+class LicenseFindingCurationReason(ValidatedIntEnum):
     """
     A curation for a license finding. Use it to correct a license finding or to add a license that was not
     previously detected.
@@ -20,9 +20,9 @@ class LicenseFindingCurationReason(Enum):
         REFERENCE: The findings reference a file or URL, e.g. SEE LICENSE IN LICENSE or https://jquery.org/license/.
     """
 
-    CODE = "CODE"
-    DATA_OF = "DATA_OF"
-    DOCUMENTATION_OF = "DOCUMENTATION_OF"
-    INCORRECT = "INCORRECT"
-    NOT_DETECTED = "NOT_DETECTED"
-    REFERENCE = "REFERENCE"
+    CODE = 1
+    DATA_OF = 2
+    DOCUMENTATION_OF = 3
+    INCORRECT = 4
+    NOT_DETECTED = 5
+    REFERENCE = 6
