@@ -4,7 +4,7 @@ build-backend = "uv_build"
 
 [project]
 name = "python-ort"
-version = "0.8.0"
+version = "0.8.1"
 description = "A Python Ort model serialization library"
 readme = "README.md"
 license = "MIT"
@@ -16,7 +16,7 @@ dependencies = [
     "pydantic>=2.12.5",
 ]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.10",
