@@ -39,7 +39,7 @@ class LicenseChoices(BaseModel):
         default_factory=list,
         description="SPDX",
     )
-    package_license_choice: list[PackageLicenseChoice] = Field(
+    package_license_choices: list[PackageLicenseChoice] = Field(
         default_factory=list,
         description="Package",
     )
