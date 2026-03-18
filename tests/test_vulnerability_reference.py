@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2026 Helio Chissini de Castro <heliocastro@gmail.com>
+# SPDX-FileCopyrightText: 2026 Helio Chissini de Castro <dev@heliocastro.info>
 # SPDX-License-Identifier: MIT
 
 import pytest
