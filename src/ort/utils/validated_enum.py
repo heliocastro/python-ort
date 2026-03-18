@@ -31,4 +31,21 @@ class ValidatedIntEnum(IntEnum):
                 return cls(value)
             raise ValueError(f"Invalid value for {cls.__name__}: {value}")
 
-        return core_schema.no_info_plain_validator_function(validate)
+        enum_names = [member.name for member in cls]
+
+        return core_schema.no_info_wrap_validator_function(
+            lambda value, handler: validate(value),
+            core_schema.str_schema(),
+            serialization=core_schema.plain_serializer_function_ser_schema(
+                lambda v: v.name,
+                info_arg=False,
+            ),
+            metadata={
+                "pydantic_js_functions": [
+                    lambda _schema, handler: {
+                        "type": "string",
+                        "enum": enum_names,
+                    }
+                ]
+            },
+        )

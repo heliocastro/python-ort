@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2025 Helio Chissini de Castro <heliocastro@gmail.com>
+# SPDX-FileCopyrightText: 2025 Helio Chissini de Castro <dev@heliocastro.info>
 # SPDX-License-Identifier: MIT
 
 
