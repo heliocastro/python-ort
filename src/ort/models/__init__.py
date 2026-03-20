@@ -18,7 +18,6 @@ from .dependency_graph_edge import DependencyGraphEdge
 from .dependency_graph_node import DependencyGraphNode
 from .dependency_reference import DependencyReference
 from .hash import Hash
-from .hash_algorithm import HashAlgorithm
 from .identifier import Identifier
 from .issue import Issue
 from .ort_result import OrtResult
@@ -48,7 +47,6 @@ __all__ = [
     "DependencyGraphNode",
     "DependencyReference",
     "Hash",
-    "HashAlgorithm",
     "Identifier",
     "Includes",
     "Excludes",
