@@ -34,7 +34,7 @@ def main(
         else:
             pprint(parsed)
     except ValidationError as e:
-        logger.error(e)
+        pprint(e.errors())
         sys.exit(1)
 
 
