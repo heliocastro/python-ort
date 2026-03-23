@@ -30,8 +30,8 @@ class Choice(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
     )
-    purl: PurlType = Field(
-        ...,
+    purl: PurlType | None = Field(
+        default=None,
         description="The purl of the snippet chosen by this snippet choice."
         "If [reason] is [SnippetChoiceReason.NO_RELEVANT_FINDING], it is null.",
     )
