@@ -25,9 +25,19 @@ class PackageReference(BaseModel):
         "also use that as the default value here to not blow up ORT result files.",
     )
     dependencies: set["PackageReference"] = Field(
+        default_factory=set,
         description="The set of references to packages this package depends on. Note that this list depends on the "
         "scope in which this package is referenced.",
     )
     issues: list[Issue] = Field(
+        default_factory=list,
         description="A list of issues that occurred handling this PackageReference.",
     )
+
+    def __hash__(self) -> int:
+        return hash(self.id)
+
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, PackageReference):
+            return NotImplemented
+        return self.id == other.id
