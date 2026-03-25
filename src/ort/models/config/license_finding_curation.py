@@ -34,7 +34,7 @@ class LicenseFindingCuration(BaseModel):
     path: str = Field(
         description="A glob to match the file path of a license finding.",
     )
-    start_lines: list[int] | None = Field(
+    start_lines: str | None = Field(
         default=None,
         description="A matcher for the start line of a license finding, matches if the start line matches any of"
         "[startLines] or if [startLines] is empty.",
@@ -64,14 +64,18 @@ class LicenseFindingCuration(BaseModel):
 
     @field_validator("start_lines", mode="before")
     @classmethod
-    def parse_start_lines(cls, value: Any) -> list[int] | None:
+    def parse_start_lines(cls, value: Any) -> str | None:
         if value is None or value == "":
             return None
         if isinstance(value, str):
             # CSV style split
-            return [int(x.strip()) for x in value.split(",") if x.strip()]
-        if isinstance(value, list):
-            return [int(x) for x in value]
+            parts = value.split(",")
+            for part in parts:
+                if not part.strip().isdigit():
+                    raise ValueError(
+                        f"start_lines contains non-numeric value: '{part.strip()}'",
+                    )
+            return value
         if isinstance(value, int):
-            return [value]
+            return str(value)
         raise ValueError("start_lines must be a comma-separated string or a list of integers")
