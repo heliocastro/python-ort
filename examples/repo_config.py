@@ -23,7 +23,7 @@ def main(datafile: str) -> None:
         parsed = RepositoryConfiguration(**data)
         pprint(parsed)
     except ValidationError as e:
-        logger.error(e.errors())
+        pprint(e.errors())
         sys.exit(1)
 
 
