@@ -22,7 +22,7 @@ hooks = [
 
 [[repos]]
 repo = "https://github.com/astral-sh/ruff-pre-commit"
-rev = "v0.15.7"
+rev = "v0.15.8"
 hooks = [
   {
     id = "ruff",
@@ -43,7 +43,7 @@ hooks = [
 
 [[repos]]
 repo = "https://github.com/astral-sh/uv-pre-commit"
-rev = "0.10.12"
+rev = "0.11.3"
 hooks = [
   { id = "uv-lock" }
 ]
@@ -57,7 +57,7 @@ hooks = [
 
 [[repos]]
 repo = "https://github.com/allganize/ty-pre-commit"
-rev = "v0.0.24"
+rev = "v0.0.27"
 hooks = [
   {
     id = "ty-check",
