@@ -7,7 +7,6 @@ from ort.models.vulnerabilities import Vulnerability
 
 from .advisor_details import AdvisorDetails
 from .advisor_summary import AdvisorSummary
-from .defect import Defect
 
 
 class AdvisorResult(BaseModel):
@@ -29,11 +28,6 @@ class AdvisorResult(BaseModel):
 
     summary: AdvisorSummary = Field(
         description="A summary of the advisor results.",
-    )
-
-    defects: list[Defect] = Field(
-        default_factory=list,
-        description="The defects.",
     )
 
     vulnerabilities: list[Vulnerability] = Field(

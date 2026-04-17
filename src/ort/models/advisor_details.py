@@ -4,8 +4,6 @@
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from ort.models import AdvisorCapability
-
 
 class AdvisorDetails(BaseModel):
     """
@@ -18,7 +16,3 @@ class AdvisorDetails(BaseModel):
     )
 
     name: str = Field(description="The name of the used advisor.")
-    capabilities: set[AdvisorCapability] = Field(
-        description="The capabilities of the used advisor. This property indicates, which kind of findings"
-        "are retrieved by the advisor."
-    )
