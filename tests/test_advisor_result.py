@@ -6,7 +6,6 @@ from datetime import datetime, timezone
 import pytest
 from pydantic import ValidationError
 
-from ort.models.advisor_capability import AdvisorCapability
 from ort.models.advisor_details import AdvisorDetails
 from ort.models.advisor_result import AdvisorResult
 from ort.models.advisor_summary import AdvisorSummary
@@ -24,8 +23,6 @@ def test_advisor_result_from_yaml():
 
     if result.advisor.name != "VulnerableCode":
         pytest.fail(f"Expected advisor name 'VulnerableCode', got '{result.advisor.name}'")
-    if result.advisor.capabilities != {AdvisorCapability.VULNERABILITIES}:
-        pytest.fail(f"Expected {{VULNERABILITIES}}, got {result.advisor.capabilities}")
     if len(result.vulnerabilities) != 2:
         pytest.fail(f"Expected 2 vulnerabilities, got {len(result.vulnerabilities)}")
     if result.vulnerabilities[0].id != "CVE-2024-1234":
@@ -38,35 +35,6 @@ def test_advisor_result_from_yaml():
         )
     if result.vulnerabilities[0].references[0].score != 8.5:
         pytest.fail(f"Expected score 8.5, got {result.vulnerabilities[0].references[0].score}")
-    if result.defects != []:
-        pytest.fail(f"Expected empty defects, got {result.defects}")
-
-
-def test_advisor_result_with_defects_from_yaml():
-    """Test loading an AdvisorResult with defects and issues from YAML."""
-    config_data = load_yaml_config("advisor_result_defects.yml", "advisor")
-
-    try:
-        result = AdvisorResult(**config_data)
-    except ValidationError as e:
-        pytest.fail(f"Failed to instantiate AdvisorResult: {e}")
-
-    if result.advisor.name != "OSV":
-        pytest.fail(f"Expected advisor name 'OSV', got '{result.advisor.name}'")
-    if result.advisor.capabilities != {AdvisorCapability.DEFECTS, AdvisorCapability.VULNERABILITIES}:
-        pytest.fail(f"Expected {{DEFECTS, VULNERABILITIES}}, got {result.advisor.capabilities}")
-    if len(result.summary.issues) != 1:
-        pytest.fail(f"Expected 1 issue, got {len(result.summary.issues)}")
-    if result.summary.issues[0].source != "OSV":
-        pytest.fail(f"Expected issue source 'OSV', got '{result.summary.issues[0].source}'")
-    if len(result.defects) != 1:
-        pytest.fail(f"Expected 1 defect, got {len(result.defects)}")
-    if result.defects[0].id != "BUG-42":
-        pytest.fail(f"Expected defect id 'BUG-42', got '{result.defects[0].id}'")
-    if result.defects[0].title != "Null pointer exception in parser":
-        pytest.fail(f"Expected defect title 'Null pointer exception in parser', got '{result.defects[0].title}'")
-    if result.vulnerabilities != []:
-        pytest.fail(f"Expected empty vulnerabilities, got {result.vulnerabilities}")
 
 
 def test_advisor_result_minimal():
@@ -74,7 +42,6 @@ def test_advisor_result_minimal():
     result = AdvisorResult(
         advisor=AdvisorDetails(
             name="TestAdvisor",
-            capabilities={AdvisorCapability.VULNERABILITIES},
         ),
         summary=AdvisorSummary(
             start_time=datetime(2024, 1, 1, 0, 0, 0, tzinfo=timezone.utc),
@@ -85,8 +52,6 @@ def test_advisor_result_minimal():
         pytest.fail(f"Expected advisor name 'TestAdvisor', got '{result.advisor.name}'")
     if result.vulnerabilities != []:
         pytest.fail(f"Expected empty vulnerabilities, got {result.vulnerabilities}")
-    if result.defects != []:
-        pytest.fail(f"Expected empty defects, got {result.defects}")
 
 
 def test_advisor_result_missing_advisor():
@@ -106,7 +71,6 @@ def test_advisor_result_missing_summary():
         AdvisorResult(
             advisor=AdvisorDetails(
                 name="TestAdvisor",
-                capabilities={AdvisorCapability.VULNERABILITIES},
             ),
         )  #  ty: ignore[missing-argument]
 
