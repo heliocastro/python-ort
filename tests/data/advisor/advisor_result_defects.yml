@@ -9,3 +9,4 @@ summary:
       message: "Timeout while querying OSV API."
       severity: 2
 vulnerabilities: []
+volumes:

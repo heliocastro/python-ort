@@ -43,3 +43,11 @@ class LicenseFinding(BaseModel):
             return value
         except ExpressionError as e:
             raise ValueError(str(e)) from e
+
+    def __hash__(self) -> int:
+        return hash(self.license)
+
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, LicenseFinding):
+            return NotImplemented
+        return self.license == other.license

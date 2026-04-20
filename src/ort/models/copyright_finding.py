@@ -21,3 +21,11 @@ class CopyrightFinding(BaseModel):
     location: TextLocation = Field(
         description="The text location where the copyright statement was found.",
     )
+
+    def __hash__(self) -> int:
+        return hash(self.statement)
+
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, CopyrightFinding):
+            return NotImplemented
+        return self.statement == other.statement

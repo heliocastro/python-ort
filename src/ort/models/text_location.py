@@ -31,8 +31,6 @@ class TextLocation(BaseModel):
     def validate_line_numbers(cls, value):
         if isinstance(value, str):
             value = int(value)
-        if value < 0:
-            raise ValueError("Line numbers must be greater than or equal to 0.")
         return value
 
     def __hash__(self) -> int:
