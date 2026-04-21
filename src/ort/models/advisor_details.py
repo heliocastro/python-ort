@@ -3,6 +3,9 @@
 
 
 from pydantic import BaseModel, ConfigDict, Field
+from typing_extensions import deprecated
+
+from ort.models import AdvisorCapability
 
 
 class AdvisorDetails(BaseModel):
@@ -16,3 +19,10 @@ class AdvisorDetails(BaseModel):
     )
 
     name: str = Field(description="The name of the used advisor.")
+    capabilities: set[AdvisorCapability] = Field(
+        repr=False,
+        exclude=True,
+        deprecated=deprecated("Deprecated field."),
+        description="The capabilities of the used advisor. This property indicates, which kind of findings"
+        "are retrieved by the advisor.",
+    )
