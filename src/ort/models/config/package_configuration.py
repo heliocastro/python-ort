@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_serializer
 
 from ort.models.config.license_finding_curation import LicenseFindingCuration
 from ort.models.config.path_exclude import PathExclude
@@ -66,3 +66,7 @@ class PackageConfiguration(BaseModel):
         default_factory=list,
         description="License finding curations.",
     )
+
+    @field_serializer("id")
+    def serialize_id(self, value: Identifier):
+        return str(value)

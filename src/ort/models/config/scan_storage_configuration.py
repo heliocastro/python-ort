@@ -64,7 +64,7 @@ class FileBasedStorageConfiguration(ScanStorageConfiguration):
     )
     ort_type: StorageType = Field(
         alias="type",
-        default="PROVENANCE_BASED",
+        default=StorageType.PROVENANCE_BASED,
         description=("The way that scan results are stored, defaults to StorageType.PROVENANCE_BASED."),
     )
 
@@ -79,6 +79,6 @@ class PostgresStorageConfiguration(ScanStorageConfiguration):
     )
     ort_type: StorageType = Field(
         alias="type",
-        default="PROVENANCE_BASED",
+        default=StorageType.PROVENANCE_BASED,
         description=("The way that scan results are stored, defaults to StorageType.PROVENANCE_BASED."),
     )

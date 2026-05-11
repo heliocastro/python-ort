@@ -4,7 +4,7 @@ build-backend = "uv_build"
 
 [project]
 name = "python-ort"
-version = "0.8.14"
+version = "0.8.15"
 description = "A Python Ort model serialization library"
 readme = "README.md"
 license = "MIT"
@@ -13,7 +13,7 @@ requires-python = ">=3.10"
 dependencies = [
     "license-expression>=30.4.4",
     "packageurl-python>=0.17.6",
-    "pydantic>=2.13.3",
+    "pydantic>=2.13.4",
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -36,12 +36,12 @@ module-root = "src"
 
 [dependency-groups]
 dev = [
-    "datamodel-code-generator[http]>=0.56.1",
+    "datamodel-code-generator[http]>=0.57.0",
     "pytest>=9.0.3",
     "rich>=15.0.0",
-    "ruff>=0.15.11",
-    "ty>=0.0.32",
-    "types-pyyaml>=6.0.12.20260408",
+    "ruff>=0.15.12",
+    "ty>=0.0.35",
+    "types-pyyaml>=6.0.12.20260510",
 ]
 
 [tool.pytest.ini_options]
