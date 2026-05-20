@@ -39,9 +39,9 @@ dev = [
     "datamodel-code-generator[http]>=0.57.0",
     "pytest>=9.0.3",
     "rich>=15.0.0",
-    "ruff>=0.15.12",
-    "ty>=0.0.35",
-    "types-pyyaml>=6.0.12.20260510",
+    "ruff>=0.15.13",
+    "ty>=0.0.38",
+    "types-pyyaml>=6.0.12.20260518",
 ]
 
 [tool.pytest.ini_options]
