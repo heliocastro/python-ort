@@ -20,6 +20,7 @@ from .dependency_reference import DependencyReference
 from .hash import Hash
 from .identifier import Identifier
 from .issue import Issue
+from .licenses.license_classifications import LicenseClassifications
 from .ort_result import OrtResult
 from .package import Package
 from .package_curation import PackageCuration
@@ -51,6 +52,7 @@ __all__ = [
     "Includes",
     "Excludes",
     "Issue",
+    "LicenseClassifications",
     "OrtResult",
     "Package",
     "PackageCuration",

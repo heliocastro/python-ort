@@ -597,7 +597,7 @@ wheels = [
 
 [[package]]
 name = "python-ort"
-version = "0.8.16"
+version = "0.9.0"
 source = { editable = "." }
 dependencies = [
     { name = "license-expression" },
