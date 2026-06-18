@@ -36,11 +36,11 @@ module-root = "src"
 
 [dependency-groups]
 dev = [
-    "datamodel-code-generator[http]>=0.57.0",
-    "pytest>=9.0.3",
+    "datamodel-code-generator[http]>=0.64.0",
+    "pytest>=9.1.0",
     "rich>=15.0.0",
-    "ruff>=0.15.13",
-    "ty>=0.0.38",
+    "ruff>=0.15.17",
+    "ty>=0.0.50",
     "types-pyyaml>=6.0.12.20260518",
 ]
 
