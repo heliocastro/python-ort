@@ -34,6 +34,7 @@ def main(
         else:
             pprint(parsed)
     except ValidationError as e:
+        logger.error("Validation error while parsing the ORT result:")
         pprint(e.errors())
         sys.exit(1)
 
