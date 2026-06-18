@@ -597,13 +597,14 @@ wheels = [
 
 [[package]]
 name = "python-ort"
-version = "0.9.3"
+version = "0.9.4"
 source = { editable = "." }
 dependencies = [
     { name = "click" },
     { name = "license-expression" },
     { name = "packageurl-python" },
     { name = "pydantic" },
+    { name = "pyyaml" },
 ]
 
 [package.dev-dependencies]
@@ -622,6 +623,7 @@ requires-dist = [
     { name = "license-expression", specifier = ">=30.4.4" },
     { name = "packageurl-python", specifier = ">=0.17.6" },
     { name = "pydantic", specifier = ">=2.13.4" },
+    { name = "pyyaml", specifier = ">=6.0.3" },
 ]
 
 [package.metadata.requires-dev]

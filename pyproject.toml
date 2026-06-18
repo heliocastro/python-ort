@@ -1,6 +1,6 @@
 [project]
 name = "python-ort"
-version = "0.9.3"
+version = "0.9.4"
 description = "A Python Ort model serialization library"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -22,6 +22,7 @@ dependencies = [
   "license-expression>=30.4.4",
   "packageurl-python>=0.17.6",
   "pydantic>=2.13.4",
+  "pyyaml>=6.0.3",
 ]
 
 [project.scripts]
