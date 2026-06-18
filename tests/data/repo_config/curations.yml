@@ -149,6 +149,16 @@ curations:
           type: "Git"
           url: "https://some.repository.com/bitbucket/psd-interface.git"
           revision: "v7.7.0"
+    - id: "PyPI::gevent-websocket:(,0.10.1]"
+      curations:
+        authors:
+        - "Jeffrey Gelens"
+        concluded_license: "Apache 2.0"
+        declared_license_mapping:
+          "Copyright 2011-2017 Jeffrey Gelens <jeffrey@noppo.pro>": "NONE"
+        comment: |
+          Mapping declared license based on
+          [https://github.com/jgelens/gevent-websocket/blob/master/LICENSE].
   license_findings:
     - path: "conan_extensions/extensions/commands/sbom/README.md"
       start_lines: "23"
