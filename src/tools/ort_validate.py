@@ -25,8 +25,9 @@ def load_and_validate(model: type[ModelT], datafile: str) -> None:
         parsed = model.model_validate(data or {})
         logger.debug(parsed.model_dump_json(indent=2))
         logger.info(f"Successfully validated {datafile} as {model.__name__}.")
-    except ValidationError:
+    except ValidationError as e:
         logger.error("Validation error while parsing the ORT result:")
+        logger.error(e)
         sys.exit(1)
     except OSError as e:
         logger.error(f"Error while opening the file {datafile}: {e}")
