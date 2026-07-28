@@ -155,7 +155,7 @@ def test_evaluator_run_invalid_violation_entry():
             start_time=datetime(2026, 3, 12, 15, 8, 5, tzinfo=timezone.utc),
             end_time=datetime(2026, 3, 12, 15, 8, 8, tzinfo=timezone.utc),
             environment=_make_environment(),
-            violations=[{"rule": "MISSING_REQUIRED_FIELDS"}],  # ty: ignore[invalid-argument-type]
+            violations=[{"rule": "MISSING_REQUIRED_FIELDS"}],
         )
 
 
@@ -163,7 +163,7 @@ def test_evaluator_run_invalid_start_time_type():
     """Test that an invalid start_time type raises a ValidationError."""
     with pytest.raises(ValidationError):
         EvaluatorRun(
-            start_time="not-a-date",  # ty: ignore[invalid-argument-type]
+            start_time="not-a-date",
             end_time=datetime(2026, 3, 12, 15, 8, 8, tzinfo=timezone.utc),
             environment=_make_environment(),
         )

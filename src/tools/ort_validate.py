@@ -9,7 +9,7 @@ from typing import TypeVar
 import click
 from pydantic import BaseModel, ValidationError
 
-from ort import RepositoryConfiguration, ort_yaml_load
+from ort import OrtResult, RepositoryConfiguration, ort_yaml_load
 from ort.models import LicenseClassifications
 
 logger = logging.getLogger()
@@ -40,7 +40,6 @@ def main(debug: bool = False) -> None:
     logging.basicConfig(level=logging.DEBUG)
     if debug:
         logging.basicConfig(level=logging.DEBUG)
-    pass
 
 
 @click.command()
@@ -55,8 +54,15 @@ def repository_configuration(datafile):
     load_and_validate(RepositoryConfiguration, datafile)
 
 
+@click.command()
+@click.argument("datafile")
+def ort_result(datafile):
+    load_and_validate(OrtResult, datafile)
+
+
 main.add_command(repository_configuration)
 main.add_command(license_classifications)
+main.add_command(ort_result)
 
 if __name__ == "__main__":
     main()
