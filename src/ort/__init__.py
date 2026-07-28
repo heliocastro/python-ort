@@ -9,8 +9,8 @@ from .utils.yaml_loader import OrtYamlLoader, ort_yaml_load
 
 __all__ = [
     "AnalyzerResult",
+    "OrtResult",
     "OrtYamlLoader",
     "RepositoryConfiguration",
-    "OrtResult",
     "ort_yaml_load",
 ]

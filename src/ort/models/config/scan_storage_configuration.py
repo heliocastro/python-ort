@@ -38,7 +38,7 @@ class ScanStorageConfiguration(BaseModel):
     @classmethod
     def validate_provenance(cls, v):
         if not isinstance(v, dict):
-            raise ValueError("Config must be a dictionary.")
+            raise TypeError("Config must be a dictionary.")
         # Return the dict as-is; ScanStorageConfiguration with extra="allow"
         # will store all fields without needing to instantiate subclasses.
         return v
@@ -64,7 +64,7 @@ class FileBasedStorageConfiguration(ScanStorageConfiguration):
     )
     ort_type: StorageType = Field(
         alias="type",
-        default="PROVENANCE_BASED",
+        default=StorageType.PROVENANCE_BASED,
         description=("The way that scan results are stored, defaults to StorageType.PROVENANCE_BASED."),
     )
 
@@ -79,6 +79,6 @@ class PostgresStorageConfiguration(ScanStorageConfiguration):
     )
     ort_type: StorageType = Field(
         alias="type",
-        default="PROVENANCE_BASED",
+        default=StorageType.PROVENANCE_BASED,
         description=("The way that scan results are stored, defaults to StorageType.PROVENANCE_BASED."),
     )

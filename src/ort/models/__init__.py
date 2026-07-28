@@ -20,6 +20,7 @@ from .dependency_reference import DependencyReference
 from .hash import Hash
 from .identifier import Identifier
 from .issue import Issue
+from .licenses.license_classifications import LicenseClassifications
 from .ort_result import OrtResult
 from .package import Package
 from .package_curation import PackageCuration
@@ -46,21 +47,22 @@ __all__ = [
     "DependencyGraphEdge",
     "DependencyGraphNode",
     "DependencyReference",
+    "Excludes",
     "Hash",
     "Identifier",
     "Includes",
-    "Excludes",
     "Issue",
+    "LicenseClassifications",
     "OrtResult",
     "Package",
     "PackageCuration",
     "PackageCurationData",
     "PackageLinkage",
     "PackageReference",
-    "PathExcludeReason",
-    "PathIncludeReason",
     "PathExclude",
+    "PathExcludeReason",
     "PathInclude",
+    "PathIncludeReason",
     "Project",
     "RemoteArtifact",
     "Repository",

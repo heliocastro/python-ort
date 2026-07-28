@@ -23,6 +23,7 @@ def main(datafile: str) -> None:
         parsed = RepositoryConfiguration(**data)
         pprint(parsed)
     except ValidationError as e:
+        logger.error("Validation error while parsing the ORT result:")
         pprint(e.errors())
         sys.exit(1)
 

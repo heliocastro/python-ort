@@ -4,7 +4,7 @@
 
 from typing import Any
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, model_serializer, model_validator
 
 
 class Identifier(BaseModel):
@@ -64,4 +64,8 @@ class Identifier(BaseModel):
         raise TypeError("Identifier must be a dict or a string in the correct format")
 
     def __str__(self) -> str:
-        return ":".join([self.orttype, self.namespace, self.name, self.version])
+        return f"{self.orttype}:{self.namespace}:{self.name}:{self.version}"
+
+    @model_serializer(mode="plain")
+    def serialize(self) -> str:
+        return str(self)

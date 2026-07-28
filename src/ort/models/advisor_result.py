@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 from pydantic import BaseModel, ConfigDict, Field
+from typing_extensions import deprecated
 
 from ort.models.vulnerabilities import Vulnerability
 
@@ -31,12 +32,15 @@ class AdvisorResult(BaseModel):
         description="A summary of the advisor results.",
     )
 
-    defects: list[Defect] = Field(
-        default_factory=list,
-        description="The defects.",
-    )
-
     vulnerabilities: list[Vulnerability] = Field(
         default_factory=list,
         description="The vulnerabilities.",
+    )
+
+    defects: list[Defect] = Field(
+        default_factory=list,
+        repr=False,
+        exclude=True,
+        deprecated=deprecated("Deprecated field."),
+        description="The defects.",
     )

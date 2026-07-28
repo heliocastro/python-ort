@@ -3,6 +3,7 @@
 
 
 import pytest
+from pydantic.v1 import ValidationError
 
 from ort.models import Includes, PathInclude, PathIncludeReason
 from ort.models.config.repository_configuration import RepositoryConfiguration
@@ -40,7 +41,7 @@ def test_only_include_valid():
             ]
         )
         repo_config = RepositoryConfiguration(includes=includes_model)
-    except Exception as e:
+    except ValidationError as e:
         pytest.fail(f"Failed to instantiate RepositoryConfiguration: {e}")
 
     if not repo_config.includes or not getattr(repo_config.includes, "paths", None):

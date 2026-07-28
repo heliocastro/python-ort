@@ -9,30 +9,20 @@ import click
 from pydantic import ValidationError
 from rich.pretty import pprint
 
-from ort import OrtResult, ort_yaml_load
+from ort import ort_yaml_load
+from ort.models import LicenseClassifications
 
 logger = logging.getLogger()
 
 
 @click.command()
 @click.argument("datafile")
-@click.option("-a", "--analyzer", is_flag=True)
-@click.option("-v", "--advisor", is_flag=True)
-def main(
-    datafile: str,
-    analyzer: bool,
-    advisor: bool,
-) -> None:
+def main(datafile: str) -> None:
     try:
         with Path(datafile).open() as fd:
             data = ort_yaml_load(fd)
-        parsed = OrtResult(**data)
-        if analyzer:
-            pprint(parsed.analyzer)
-        if advisor:
-            pprint(parsed.advisor)
-        else:
-            pprint(parsed)
+        parsed = LicenseClassifications(**data)
+        pprint(parsed)
     except ValidationError as e:
         logger.error("Validation error while parsing the ORT result:")
         pprint(e.errors())

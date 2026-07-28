@@ -111,8 +111,8 @@ def test_curations_yml_package_curations():
     if repo_config.curations is None:
         pytest.fail("curations section is missing")
     packages = repo_config.curations.packages
-    if len(packages) != 3:
-        pytest.fail(f"Expected 3 package curations, got {len(packages)}")
+    if len(packages) != 4:
+        pytest.fail(f"Expected 4 package curations, got {len(packages)}")
 
     if packages[0].id != "Conan::cppcodec:0.2.0":
         pytest.fail(f"Unexpected package id: {packages[0].id}")
