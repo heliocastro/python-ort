@@ -20,7 +20,7 @@ class SampleModel(BaseModel):
 
 class TestValidatedIntEnumFromString:
     def test_valid_string_name(self):
-        result = SampleModel(level="HIGH")  # ty: ignore[invalid-argument-type]
+        result = SampleModel(level="HIGH")
         if result.level != SampleEnum.HIGH:
             pytest.fail(f"Expected SampleEnum.HIGH, got {result.level}")
         if result.level.value != 3:
@@ -34,20 +34,20 @@ class TestValidatedIntEnumFromString:
 
     def test_case_sensitive_name(self):
         with pytest.raises(ValidationError):
-            SampleModel(level="high")  # ty: ignore[invalid-argument-type]
+            SampleModel(level="high")
 
     def test_invalid_string_name(self):
         with pytest.raises(ValidationError):
-            SampleModel(level="CRITICAL")  # ty: ignore[invalid-argument-type]
+            SampleModel(level="CRITICAL")
 
     def test_empty_string(self):
         with pytest.raises(ValidationError):
-            SampleModel(level="")  # ty: ignore[invalid-argument-type]
+            SampleModel(level="")
 
 
 class TestValidatedIntEnumFromInt:
     def test_valid_int_value(self):
-        result = SampleModel(level=1)  # ty: ignore[invalid-argument-type]
+        result = SampleModel(level=1)
         if result.level != SampleEnum.LOW:
             pytest.fail(f"Expected SampleEnum.LOW, got {result.level}")
 
@@ -59,15 +59,15 @@ class TestValidatedIntEnumFromInt:
 
     def test_invalid_int_value(self):
         with pytest.raises(ValidationError):
-            SampleModel(level=99)  # ty: ignore[invalid-argument-type]
+            SampleModel(level=99)
 
     def test_zero_not_a_member(self):
         with pytest.raises(ValidationError):
-            SampleModel(level=0)  # ty: ignore[invalid-argument-type]
+            SampleModel(level=0)
 
     def test_negative_int(self):
         with pytest.raises(ValidationError):
-            SampleModel(level=-1)  # ty: ignore[invalid-argument-type]
+            SampleModel(level=-1)
 
 
 class TestValidatedIntEnumFromInstance:
@@ -90,30 +90,30 @@ class TestValidatedIntEnumFromInstance:
 class TestValidatedIntEnumInvalidTypes:
     def test_float_value(self):
         with pytest.raises(ValidationError):
-            SampleModel(level=1.5)  # ty: ignore[invalid-argument-type]
+            SampleModel(level=1.5)
 
     def test_none_value(self):
         with pytest.raises(ValidationError):
-            SampleModel(level=None)  # ty: ignore[invalid-argument-type]
+            SampleModel(level=None)
 
     def test_list_value(self):
         with pytest.raises(ValidationError):
-            SampleModel(level=[1])  # ty: ignore[invalid-argument-type]
+            SampleModel(level=[1])
 
     def test_dict_value(self):
         with pytest.raises(ValidationError):
-            SampleModel(level={"name": "HIGH"})  # ty: ignore[invalid-argument-type]
+            SampleModel(level={"name": "HIGH"})
 
 
 class TestValidatedIntEnumSerialization:
     def test_serialize_to_name(self):
-        result = SampleModel(level="HIGH")  # ty: ignore[invalid-argument-type]
+        result = SampleModel(level="HIGH")
         data = result.model_dump()
         if data["level"] != "HIGH":
             pytest.fail(f"Expected 'HIGH', got {data['level']}")
 
     def test_json_round_trip(self):
-        original = SampleModel(level="MEDIUM")  # ty: ignore[invalid-argument-type]
+        original = SampleModel(level="MEDIUM")
         json_str = original.model_dump_json()
         restored = SampleModel.model_validate_json(json_str)
         if restored.level != SampleEnum.MEDIUM:

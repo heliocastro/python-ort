@@ -38,7 +38,7 @@ class ScanStorageConfiguration(BaseModel):
     @classmethod
     def validate_provenance(cls, v):
         if not isinstance(v, dict):
-            raise ValueError("Config must be a dictionary.")
+            raise TypeError("Config must be a dictionary.")
         # Return the dict as-is; ScanStorageConfiguration with extra="allow"
         # will store all fields without needing to instantiate subclasses.
         return v

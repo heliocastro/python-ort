@@ -1,6 +1,6 @@
 [project]
 name = "python-ort"
-version = "0.9.5"
+version = "0.10.0"
 description = "A Python Ort model serialization library"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -18,11 +18,11 @@ classifiers = [
   "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 dependencies = [
-  "click>=8.4.1",
-  "license-expression>=30.4.4",
-  "packageurl-python>=0.17.6",
-  "pydantic>=2.13.4",
-  "pyyaml>=6.0.3",
+    "click>=8.4.2",
+    "license-expression>=30.4.4",
+    "packageurl-python>=0.17.6",
+    "pydantic>=2.13.4",
+    "pyyaml>=6.0.3",
 ]
 
 [project.scripts]
@@ -30,12 +30,12 @@ ort-validate = "tools.ort_validate:main"
 
 [dependency-groups]
 dev = [
-  "datamodel-code-generator[http]>=0.64.0",
-  "pytest>=9.1.0",
-  "rich>=15.0.0",
-  "ruff>=0.15.17",
-  "ty>=0.0.50",
-  "types-pyyaml>=6.0.12.20260518",
+    "datamodel-code-generator[http]>=0.71.0",
+    "pytest>=9.1.1",
+    "rich>=15.0.0",
+    "ruff>=0.16.0",
+    "ty>=0.0.64",
+    "types-pyyaml>=6.0.12.20260724",
 ]
 
 [build-system]
@@ -44,7 +44,8 @@ build-backend = "uv_build"
 
 [tool.codespell]
 skip = [
-  ".agents",
+  ".agents/*",
+
 ]
 
 [tool.pylint.messages_control]
