@@ -312,7 +312,7 @@ def test_scan_summary_invalid_start_time():
     """Test that an invalid start_time type raises ValidationError."""
     with pytest.raises(ValidationError):
         ScanSummary(
-            start_time="not-a-date",  # ty: ignore[invalid-argument-type]
+            start_time="not-a-date",
             end_time=datetime(2026, 3, 4, 17, 47, 23, tzinfo=timezone.utc),
         )
 

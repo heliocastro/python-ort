@@ -27,23 +27,17 @@ class UnknownProvenance(Provenance):
     Provenance information about the origin of source code.
     """
 
-    pass
-
 
 class KnownProvenance(Provenance):
     """
     Provenance information about the origin of source code.
     """
 
-    pass
-
 
 class RemoteProvenance(KnownProvenance):
     """
     Provenance information about the origin of source code.
     """
-
-    pass
 
 
 class ArtifactProvenance(RemoteProvenance):
