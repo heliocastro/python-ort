@@ -24,7 +24,7 @@ class Package(BaseModel):
     """
 
     model_config = ConfigDict(
-        extra="allow",
+        extra="forbid",
     )
 
     id: Identifier = Field(

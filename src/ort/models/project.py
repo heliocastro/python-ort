@@ -19,7 +19,7 @@ class Project(BaseModel):
     """
 
     model_config = ConfigDict(
-        extra="forbid",
+        extra="allow",
     )
 
     id: Identifier = Field(
