@@ -9,6 +9,7 @@ from ort.models.vulnerabilities import Vulnerability
 from .advisor_details import AdvisorDetails
 from .advisor_summary import AdvisorSummary
 from .defect import Defect
+from .health_metrics import HealthMetric
 
 
 class AdvisorResult(BaseModel):
@@ -21,7 +22,7 @@ class AdvisorResult(BaseModel):
     """
 
     model_config = ConfigDict(
-        extra="forbid",
+        extra="allow",
     )
 
     advisor: AdvisorDetails = Field(
@@ -33,6 +34,11 @@ class AdvisorResult(BaseModel):
     )
 
     vulnerabilities: list[Vulnerability] = Field(
+        default_factory=list,
+        description="The vulnerabilities.",
+    )
+
+    health_metrics: list[HealthMetric] = Field(
         default_factory=list,
         description="The vulnerabilities.",
     )
