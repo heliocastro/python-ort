@@ -1,6 +1,6 @@
 [project]
 name = "python-ort"
-version = "0.10.4"
+version = "0.10.5"
 description = "A Python Ort model serialization library"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -30,11 +30,11 @@ ort-validate = "tools.ort_validate:main"
 
 [dependency-groups]
 dev = [
-    "datamodel-code-generator[http]>=0.83.0",
+    "datamodel-code-generator[http]>=0.86.0",
     "pytest>=9.1.1",
     "rich>=15.0.0",
-    "ruff>=0.17.0",
-    "ty>=0.0.87",
+    "ruff>=0.17.2",
+    "ty>=0.0.92",
     "types-pyyaml>=6.0.12.20260906",
 ]
 
