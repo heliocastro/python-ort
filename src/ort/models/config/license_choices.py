@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2026 Helio Chissini de     Castro <heliocastro@gmail.com>
+# SPDX-FileCopyrightText: 2026 Helio Chissini de Castro <heliocastro@gmail.com>
 # SPDX-License-Identifier: MIT
 from pydantic import BaseModel, ConfigDict, Field
 
