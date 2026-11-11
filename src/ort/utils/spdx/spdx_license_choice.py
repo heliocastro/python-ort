@@ -1,4 +1,5 @@
 # SPDX-FileCopyrightText: 2026 Helio Chissini de Castro <heliocastro@gmail.com>
+# SPDX-FileCopyrightText: (c) 2026 CARIAD SE, All rights reserved.
 # SPDX-License-Identifier: MIT
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -41,4 +42,8 @@ class SpdxLicenseChoice(BaseModel):
     choice: str = Field(
         ...,
         description="Package",
+    )
+    comment: str | None = Field(
+        default=None,
+        description="Comment",
     )
